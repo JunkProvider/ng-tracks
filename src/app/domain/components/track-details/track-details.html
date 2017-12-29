@@ -1,0 +1,90 @@
+<div *ngIf="track" ngClass="{ 'edit-mode': editing }">
+  <div class="head">
+    <input
+      type="text"
+      class="title"
+      [readonly]="!editing"
+      [disabled]="!editing"
+      placeholder="Unnamed"
+      [value]="track.title"
+      (input)="onTitleChanged($event.target.value)"
+    />
+    <span class="rating">
+      <i
+        *ngFor="let option of ratingOptions; let i = index"
+        [ngClass]="{ 'active': track.rating >= (i + 1) }"
+        [title]="option.description"
+        (click)="rate(i + 1)"
+      ></i>
+    </span>
+  </div>
+  <div class="body">
+    <div class="definition-list">
+      <label>
+        <span>Interpret</span>
+        <app-text-input
+          [readonly]="!editing"
+          [disabled]="!editing"
+          placeholder="No Interprets"
+          [value]="track.interpret"
+          (input)="onInterpretChanged($event)"
+          [suggestionProvider]="interpretSuggestionProvider"
+        ></app-text-input>
+      </label>
+      <label>
+        <span>Genre</span>
+        <app-text-input
+          [readonly]="!editing"
+          [disabled]="!editing"
+          placeholder="No Genres"
+          [value]="track.genre"
+          (input)="onGenreChanged($event)"
+          [suggestionProvider]="genreSuggestionProvider"
+        ></app-text-input>
+      </label>
+    </div>
+    <div *ngIf="embedUrl" class="video">
+      <iframe [src]="embedUrl" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+    </div>
+    <label *ngIf="editing" class="links">
+      <span>Link</span>
+      <app-text-input
+        [value]="track.joinedLinks"
+        (input)="onLinksChanged($event)"
+      ></app-text-input>
+    </label>
+    <label class="tags">
+      <span>Tags</span>
+      <ul class="tag-list">
+        <li class="clearfix" *ngFor="let tag of track.tags; let i = index">
+          <app-text-input
+            [readonly]="!editing"
+            [disabled]="!editing"
+            placeholder="Name"
+            [value]="tag.name"
+            (input)="onTagNameChanged(i, $event)"
+            (focus)="updateTags(i)"
+            (blur)="updateTags(-1)"
+            [suggestionProvider]="tagTypeSuggetionProvider"
+          ></app-text-input>
+          <input
+            type="text"
+            [readonly]="!editing"
+            [disabled]="!editing"
+            placeholder="0"
+            [value]="tag.value"
+            (input)="onTagValueChanged(i, $event.target.value)"
+            (blur)="validateTagValue(i)"
+          />
+        </li>
+      </ul>
+    </label>
+  </div>
+  <div class="buttons clearfix">
+      <button class="delete" *ngIf="!editing" [disabled]="!track.id" (click)="delete()">Delete</button>
+      <button class="new" *ngIf="!editing" (click)="new()">New</button>
+      <button class="edit" *ngIf="!editing" (click)="edit()">Edit</button>
+      <button class="save" *ngIf="editing" [disabled]="!changed || !valid" (click)="save()">Save</button>
+      <button class="discard" *ngIf="editing && track.id" (click)="discard()">Cancel</button>
+  </div>
+</div>

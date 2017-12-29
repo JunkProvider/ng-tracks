@@ -1,0 +1,52 @@
+<div class="filter-section">
+	<div class="column">
+		<ul class="filters">
+			<li
+				*ngFor="let filter of filters; let index = index" class="filter">
+				<span class="text" (click)="select(filter)">[{{ index + 1 }}] {{ filter.text }}</span>
+				<button class="remove" (click)="remove(filter)"><span>x</span></button>
+			</li>
+		</ul>
+	</div>
+	<div class="column">
+		<div class="filter-form-container">
+			<div *ngIf="selectedFilter" class="filter-form">
+				<select [value]="selectedFilter.type" (change)="onTypeChanged($event.target.value)">
+					<option *ngFor="let filterDefinition of filterDefinitionsAsArray" [value]="filterDefinition.type">{{ filterDefinition.typeText }}</option>
+				</select>
+
+        <fieldset *ngIf="selectedFilter.type === filterDefinitions.interprets.type">
+          <select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
+            <option *ngFor="let operator of selectedFilter.operatorsAsArray" [value]="operator.value">{{ operator.text }}</option>
+          </select>
+          <app-text-input [value]="selectedFilter.value" (input)="onValueChanged($event)" [suggestionProvider]="interpretSuggestionProvider"></app-text-input>
+        </fieldset>
+
+				<fieldset *ngIf="selectedFilter.type === filterDefinitions.genres.type">
+					<select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
+						<option *ngFor="let operator of selectedFilter.operatorsAsArray" [value]="operator.value">{{ operator.text }}</option>
+					</select>
+					<app-text-input [value]="selectedFilter.value" (input)="onValueChanged($event)" [suggestionProvider]="genreSuggestionProvider"></app-text-input>
+				</fieldset>
+
+				<fieldset *ngIf="selectedFilter.type === filterDefinitions.rating.type">
+					<select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
+						<option *ngFor="let operator of selectedFilter.operatorsAsArray" [value]="operator.value">{{ operator.text }}</option>
+					</select>
+					<input type="text" [value]="selectedFilter.value" (input)="onValueChanged($event.target.value)">
+				</fieldset>
+
+				<fieldset *ngIf="selectedFilter.type === filterDefinitions.tags.type">
+					<select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
+						<option *ngFor="let operator of selectedFilter.operatorsAsArray" [value]="operator.value">{{ operator.text }}</option>
+					</select>
+				  <app-text-input [value]="selectedFilter.value" (input)="onValueChanged($event)" [suggestionProvider]="tagTypeSuggetionProvider"></app-text-input>
+				</fieldset>
+			</div>
+		</div>
+		<div class="buttons clearfix">
+			<button class="new" (click)="add()">New</button>
+			<button class="save" (click)="apply()">Apply</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,187 @@
+:host > div {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 600px;
+    height: 100%;
+    padding: 10px;
+}
+
+.head {
+    height: 20px;
+    margin-bottom: 10px;
+}
+
+.title {
+    width: calc(100% - 110px);
+    font-weight: bold;
+    padding: 0;
+}
+
+.rating {
+    float: right;
+}
+
+.rating > i {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #404040;
+    border-radius: 100%;
+    user-select: none;
+}
+
+.rating > i.active {
+    background-color: #ffcc00;
+    border-color: #ffcc00;
+}
+
+.body {
+    width: 100%;
+    height: calc(100% - 48px);
+}
+
+.definition-list {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+label:after {
+    content: ".";
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0;
+}
+
+label > * {
+    display: block;
+    float: left;
+}
+
+label > *:first-child {
+    width: 140px;
+}
+
+label > *:first-child:after {
+    content: ":";
+}
+
+label > *:last-child {
+    width: calc(100% - 140px);
+}
+
+.video {
+    width: 100%;
+    height: 300px;
+}
+
+.video iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.links {
+    margin-top: 5px;
+}
+
+.links a {
+    color: inherit;
+    outline: none;
+}
+
+.links a:hover, .links a:focus {
+    color: #30a0f0;
+}
+
+.tags {
+    margin-top: 10px;
+}
+
+.tags ul {
+    width: 100%;
+}
+
+.tags ul li {
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+.tags ul li  input, .tags ul li app-text-input {
+    float: left;
+    width: 50%;
+    max-width: 200px;
+}
+
+.tags ul li  input:first-child, .tags ul li  app-text-input:first-child {
+    padding-left: 0;
+ }
+
+.tags ul li  input:last-child, .tags ul li  app-text-input:last-child {
+    width: 24px;
+    margin-left: 5px;
+    text-align: right;
+}
+
+app-input {
+    height: 20px;
+    line-height: 20px;
+    padding: 0 5px 0 5px;
+}
+
+.buttons {
+    width: 100%;
+    height: 28px;
+}
+
+.buttons > button {
+    display: block;
+    float: left;
+    height: 100%;
+    min-width: 80px;
+    padding: 0 8px 4px 8px;
+    border: none;
+    text-align: center;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buttons > button:disabled {
+    background-color: #303030;
+    color: #909090;
+    pointer-events: none;
+}
+
+.buttons > .save, .buttons > .new, .buttons > .edit {
+    float: right;
+    margin-left: 10px;
+    background-color: #238623;
+}
+
+.buttons > .save:hover, .buttons > .new:hover, .buttons > .edit:hover {
+    background-color: #2fb12f;
+}
+
+.buttons > .discard {
+    float: right;
+    background-color: #404040;
+}
+
+.buttons > .discard:hover {
+    background-color: #505050;
+}
+
+.buttons > .delete {
+    background-color: #862323;
+}
+
+.buttons > .delete:hover {
+    background-color: #b12f2f;
+}

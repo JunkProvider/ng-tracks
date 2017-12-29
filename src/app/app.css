@@ -1,0 +1,13 @@
+.sections {
+    width: 100%;
+    height: 100%;
+}
+
+.sections > * {
+    width: 100%;
+    height: 200px;
+}
+
+.sections > *:last-child {
+    height: calc(100% - 200px);
+}

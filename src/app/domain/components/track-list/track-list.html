@@ -1,0 +1,28 @@
+<ul class="clearfix">
+  <li
+    *ngFor="let track of tracks"
+    [ngClass]="{ 'selected': selectedTrack.id === track.id }"
+    (click)="select(track)"
+  >
+    <div class="head">
+      <span class="title">{{ track.title }}</span>
+      <span class="rating">
+        <i [ngClass]="{ 'active': track.rating >= 5 }"></i>
+        <i [ngClass]="{ 'active': track.rating >= 4 }"></i>
+        <i [ngClass]="{ 'active': track.rating >= 3 }"></i>
+        <i [ngClass]="{ 'active': track.rating >= 2 }"></i>
+        <i [ngClass]="{ 'active': track.rating >= 1 }"></i>
+      </span>
+    </div>
+    <dl>
+      <dt>Interpret</dt>
+      <dd>
+        <span *ngFor="let interpret of track.interprets;" class="interpret">{{ interpret.name }}</span>
+      </dd>
+      <dt>Genre</dt>
+      <dd>
+        <span *ngFor="let genre of track.genres;" class="genre">{{ genre.name }}</span>
+      </dd> 
+    </dl>
+  </li>
+</ul>

@@ -1,0 +1,22 @@
+- Replace CSS with LESS
+
+- Error Handling
+    - A Popup/Dialog should be displayed when an fatal error occured. A 'Restart Application' Button should be available.
+    - A Popup/Dialog should be displayed when an expected domain error (entity does not exist anymore) occures.
+
+- Sorting
+    - A single sort criterion should be offered.
+    - Available Criteria are 'Title', 'Rating' and 'Interpret'.
+
+- Search
+    - A search field should be offered.
+    - The search text applies to 'Title' and 'Interpret'.
+
+- Pagination
+    - The Track List requires Pagination without a hell ugly Browser Scroll Bar.
+
+- Rating
+    - A Track can be rated by clicking the desired Amount of Stars in the Detail View.
+
+- Confirm Delete
+    - A Confirmation Dialog must be displayed when the User clicks the 'Delete' Button.

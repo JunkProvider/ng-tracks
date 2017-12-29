@@ -1,0 +1,77 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #202020;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 12px;
+    color: #e0e0e0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+
+form {
+    margin: 0;
+    padding: 0; 
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+textarea {
+    resize: none;
+}
+
+input[type="text"],
+input[type="password"] {
+    height: 20px;
+    line-height: 20px;
+    padding: 0 5px 0 5px;
+}
+
+input[type="text"]:not(:read-only),
+input[type="password"]:not(:read-only),
+textarea:not(:read-only) {
+    background-color: #1B1B1B;
+}
+
+.clearfix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0;
+}

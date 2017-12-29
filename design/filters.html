@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Filter Design</title>
+        <link rel="stylesheet" type="text/css" href="filters.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="filter-section clearfix">
+            <div class="column">
+                <ul class="filters">
+                    <li class="filter">
+                        <span class="text">[1] 'Genres' contains at least one of 'Metal, Rock, Stoner Rock'</span>
+                        <button class="remove"></button>
+                    </li>
+                    <li class="filter">
+                        <span class="text">[2] 'Rating' is higher than '2'</span>
+                        <button class="remove"></button>
+                    </li>
+                </ul>
+                <input type="text" class="filter-console" placeholder="Enter Command" value="Add 'Tags' contains 'STALKER'"/>
+            </div>
+            <div class="column">
+                <form class="filter-form">
+                    <select name="type">
+                        <option value="">Select a Criterion</option>
+                        <option value="genres">Genres</option>
+                        <option value="rating">Rating</option>
+                        <option value="tags">Tags</option>
+                    </select>
+                    <fieldset data-type="rating">
+                        <select name="operator">
+                            <option value="equals">equals</option>
+                            <option value="is-greater-than">is greatre than</option>
+                            <option value="is-less-than">is less than</option>
+                        </select>
+                        <input type="number" name="value">
+                    </fieldset>
+                </form>
+                <div class="buttons clearfix">
+                    <button class="addFilter">New Filter</button>
+                    <button class="applyFilters">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
