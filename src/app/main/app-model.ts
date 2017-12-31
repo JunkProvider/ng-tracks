@@ -1,11 +1,13 @@
 import { Track, EMPTY_TRACK } from './model/track';
 import { TrackProvider } from './providers/track-provider';
 import { Injectable } from '@angular/core';
-import { createNewFilter, Filter } from './model/filter';
+import { createNewFilter, Filter, FilterData } from './model/filter';
 import {Event, Timeout} from '@junkprovider/common';
 import {GenreProvider} from './providers/genre-provider';
 import {InterpretProvider} from './providers/interpret-provider';
 import {TagTypeProvider} from './providers/tag-type-provider';
+import { CookieService } from 'angular2-cookie/core';
+import { filterDefinitions } from './model/filter-definitions';
 
 @Injectable()
 export class AppModel {
@@ -26,9 +28,11 @@ export class AppModel {
     get selectedFilter() { return this._selectedFilter; }
 
     constructor(
+      private readonly cookies: CookieService,
       private readonly trackProvider: TrackProvider
     ) {
       this.loadTracksDelay.expiredEvent.add(this, this.loadTracks);
+      this.loadFilters();
     }
 
     loadTracksAfterDelay() {
@@ -67,6 +71,7 @@ export class AppModel {
         this.filtersChangedEvent.trigger(this, null);
         this.selectedFilterChangedEvent.trigger(this, null);
         this.loadTracksAfterDelay();
+        this.saveFilters();
     }
 
     removeFilter(filter: Filter) {
@@ -82,6 +87,7 @@ export class AppModel {
             this.selectedFilterChangedEvent.trigger(this, null);
         }
         this.loadTracksAfterDelay();
+        this.saveFilters();
     }
 
     selectFilter(filter: Filter) {
@@ -91,5 +97,22 @@ export class AppModel {
 
     private onFilterChanged() {
         this.loadTracksAfterDelay();
+        this.saveFilters();
+    }
+
+    private loadFilters() {
+      const filterCookie = <any>this.cookies.getObject('filters');
+      if (!filterCookie) {
+        return;
+      }
+      const filterData = <FilterData<string>[]>filterCookie.data;
+      this._filters = filterData.map(filterDatum => Filter.fromData(filterDefinitions, filterDatum));
+      this.filtersChangedEvent.trigger(this, null);
+    }
+
+    private saveFilters() {
+      const filterData = this.filters.map(filter => filter.getData());
+      const filterCookie = { data: filterData };
+      this.cookies.putObject('filters', filterCookie);
     }
 }

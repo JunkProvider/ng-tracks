@@ -8,6 +8,13 @@ export function createNewFilter() {
 export class Filter {
     private static nextId = 0;
 
+    static fromData(definitionsMappedByType: { [index: string]: FilterDefinition<string>; }, data: FilterData<string>) {
+      const filter = new Filter(definitionsMappedByType, data.type);
+      filter.operator = data.operator;
+      filter.value = data.value;
+      return filter;
+    }
+
     readonly changedEvent = new Event<void>();
 
     private readonly definitionsMappedByType: { [index: string]: FilterDefinition<string>; };
