@@ -44,11 +44,10 @@ export class TrackDetails implements OnInit {
   ];
   unchangedTrack: TrackState = null;
   track: TrackState = null;
-  embedUrl: SafeResourceUrl = null;
   editing = false;
   changed = false;
   valid = true;
-  youtubeVideoId: string = null;
+  youtubeLink: YoutubeLink = null;
 
   constructor(
     private readonly sanitizer: DomSanitizer,
@@ -117,7 +116,7 @@ export class TrackDetails implements OnInit {
 
   validateTagValue(index: number) {
     const tag = this.track.tags[index];
-    let value = parseInt(tag.value.trim());
+    let value = parseInt(tag.value.trim(), 10);
     if (value == null || isNaN(value) || !isFinite(value) || value < 1) {
       tag.value = '';
     }
@@ -152,7 +151,7 @@ export class TrackDetails implements OnInit {
       if (name.length === 0) {
         continue;
       }
-      const value = parseInt(tagState.value);
+      const value = parseInt(tagState.value, 10);
       if (value == null || isNaN(value) || !isFinite(value) || value < 1) {
         continue;
       }
@@ -214,24 +213,9 @@ export class TrackDetails implements OnInit {
   }
 
   private updateEmbedLink() {
-    const embedLink = this.track.links
+    this.youtubeLink = <YoutubeLink>this.track.links
       .map(urlStr => this.linkParser.parse(urlStr))
-      .find(link => link.canBeEmbedded);
-
-    if (!embedLink) {
-      this.embedUrl = null;
-      this.youtubeVideoId = null;
-      return;
-    }
-
-    if (this.embedUrl && embedLink.url === this.embedUrl.toString()) {
-      return;
-    }
-
-    const youtubeLink = <YoutubeLink>embedLink;
-    this.youtubeVideoId = youtubeLink.videoId;
-
-    this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedLink.embedUrl);
+      .find(link => link instanceof YoutubeLink);
   }
 
   private onYoutubePlayerReady(event: any) {
