@@ -43,8 +43,10 @@
         ></app-text-input>
       </label>
     </div>
-    <div *ngIf="embedUrl" class="video">
-      <iframe [src]="embedUrl" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+    <div *ngIf="youtubeVideoId" class="video">
+      <app-youtube-player [videoId]="youtubeVideoId"></app-youtube-player>
+      <!--<iframe [src]="embedUrl" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>-->
+      <!--<div [id]="'youtube-player-' + youtubeIFrameNumber"></div>-->
     </div>
     <label *ngIf="editing" class="links">
       <span>Link</span>

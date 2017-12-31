@@ -23,6 +23,8 @@ import { TrackDeserializer } from './providers/track-deserializer';
 import { LinkDeserializer } from './providers/link-deserializer';
 import { LinkParser } from './services/link-parser';
 import { RateTrackService } from './services/rate-track-service';
+import { YoutubePlayer } from './components/youtube-player/youtube-player';
+import { YoutubePlayerContext } from './components/youtube-player/youtube-player-context/youtube-player-context';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { RateTrackService } from './services/rate-track-service';
     FilterSection,
     OperatorSelect,
     TrackList,
-    TrackDetails
+    TrackDetails,
+    YoutubePlayer,
+    YoutubePlayerContext
   ],
   imports: [
    BrowserModule,

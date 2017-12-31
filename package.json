@@ -24,6 +24,9 @@
     "@angular/platform-browser": "5.0.0",
     "@angular/platform-browser-dynamic": "5.0.0",
     "@angular/router": "5.0.0",
+    "@junkprovider/assertion": "0.1.0-test.2",
+    "@junkprovider/collections": "0.1.0-test.2",
+    "@junkprovider/common": "0.1.0-test.5",
     "angular2-cookie": "1.2.6",
     "core-js": "^2.4.1",
     "intl": "^1.2.5",
@@ -33,10 +36,8 @@
     "redux": "^3.7.2",
     "redux-observable": "^0.16.0",
     "rxjs": "^5.5.5",
-    "zone.js": "^0.8.14",
-    "@junkprovider/assertion": "0.1.0-test.2",
-    "@junkprovider/common": "0.1.0-test.5",
-    "@junkprovider/collections": "0.1.0-test.2"
+    "youtube-iframe": "^1.0.3",
+    "zone.js": "^0.8.14"
   },
   "devDependencies": {
     "@angular/cli": "1.6.0",

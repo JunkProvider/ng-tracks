@@ -9,8 +9,8 @@ import { GenreSuggestionProvider } from '../../providers/genre-suggestion-provid
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { LinkParser } from '../../services/link-parser';
 import { RateTrackService } from '../../services/rate-track-service';
-import { Link } from '../../model/link';
-
+import * as youtubeIFrameLoader from 'youtube-iframe';
+import { YoutubeLink } from '../../model/youtube-link';
 export interface TagState {
   name: string;
   value: string;
@@ -33,6 +33,8 @@ export interface TrackState {
   styleUrls: ['./track-details.css']
 })
 export class TrackDetails implements OnInit {
+  private static nextYoutubeIFrameNumber = 0;
+
   ratingOptions = [
     { description: 'Not my Taste.' },
     { description: 'It\'s ok, like listening to it.' },
@@ -43,9 +45,10 @@ export class TrackDetails implements OnInit {
   unchangedTrack: TrackState = null;
   track: TrackState = null;
   embedUrl: SafeResourceUrl = null;
-  editing: boolean = false;
-  changed: boolean = false;
-  valid: boolean = true;
+  editing = false;
+  changed = false;
+  valid = true;
+  youtubeVideoId: string = null;
 
   constructor(
     private readonly sanitizer: DomSanitizer,
@@ -57,7 +60,7 @@ export class TrackDetails implements OnInit {
     private readonly genreSuggestionProvider: GenreSuggestionProvider,
     private readonly tagTypeSuggetionProvider: TagTypeSuggestionProvider,
     private readonly model: AppModel
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.model.selectedTrackChangedEvent.add(this, this.update);
@@ -129,11 +132,7 @@ export class TrackDetails implements OnInit {
   }
 
   onChangedByUser() {
-    this.changed = true;/*
-      this.track.title.trim() != this.unchangedTrack.title.trim()
-      || this.track.interpret.trim() != this.unchangedTrack.interpret.trim()
-      || this.track.genre.trim() != this.unchangedTrack.genre.trim()
-      || this.track.joinedLinks.trim() != this.unchangedTrack.joinedLinks.trim();*/
+    this.changed = true;
     this.valid = this.track.title.trim().length > 0;
   }
 
@@ -219,10 +218,9 @@ export class TrackDetails implements OnInit {
       .map(urlStr => this.linkParser.parse(urlStr))
       .find(link => link.canBeEmbedded);
 
-    console.log(embedLink, this.embedUrl);
-
     if (!embedLink) {
       this.embedUrl = null;
+      this.youtubeVideoId = null;
       return;
     }
 
@@ -230,7 +228,14 @@ export class TrackDetails implements OnInit {
       return;
     }
 
+    const youtubeLink = <YoutubeLink>embedLink;
+    this.youtubeVideoId = youtubeLink.videoId;
+
     this.embedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedLink.embedUrl);
+  }
+
+  private onYoutubePlayerReady(event: any) {
+    event.target.playVideo();
   }
 
   private splitLinks(text: string) {
