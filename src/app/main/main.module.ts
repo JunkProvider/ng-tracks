@@ -25,9 +25,12 @@ import { LinkParser } from './services/link-parser';
 import { RateTrackService } from './services/rate-track-service';
 import { YoutubePlayer } from './components/youtube-player/youtube-player';
 import { YoutubePlayerContext } from './components/youtube-player/youtube-player-context/youtube-player-context';
+import { Page } from './page';
+import { CommonModule as NgCommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
+    Page,
     NavigationBar,
     FilterSection,
     OperatorSelect,
@@ -37,16 +40,14 @@ import { YoutubePlayerContext } from './components/youtube-player/youtube-player
     YoutubePlayerContext
   ],
   imports: [
-   BrowserModule,
+    BrowserModule,
     RouterModule,
     HttpClientModule,
+    NgCommonModule,
     CommonModule
   ],
   exports: [
-    NavigationBar,
-    FilterSection,
-    TrackList,
-    TrackDetails
+    Page
   ],
   providers: [
     CookieService,
@@ -66,4 +67,4 @@ import { YoutubePlayerContext } from './components/youtube-player/youtube-player
     TagTypeSuggestionProvider,
   ]
 })
-export class DomainModule { }
+export class MainModule { }

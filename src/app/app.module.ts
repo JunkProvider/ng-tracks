@@ -1,24 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CommonModule } from './common/common.module';
-import { DomainModule } from './domain/domain.module';
-import { App } from './app';
-import { default as routes } from './app.routes';
+import { MainModule } from './main/main.module';
+import { AppRoot } from './app-root';
 
 @NgModule({
   declarations: [
-    App,
+    AppRoot,
   ],
   imports: [
-    BrowserModule,
-    RouterModule.forRoot(
-      routes,
-      { enableTracing: false }
-    ),
-    CommonModule,
-    DomainModule
+    MainModule
   ],
-  bootstrap: [App]
+  bootstrap: [AppRoot]
 })
 export class AppModule {}
