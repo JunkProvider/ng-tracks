@@ -27,6 +27,7 @@ import { YoutubePlayer } from './components/youtube-player/youtube-player';
 import { YoutubePlayerContext } from './components/youtube-player/youtube-player-context/youtube-player-context';
 import { Page } from './page';
 import { CommonModule as NgCommonModule } from '@angular/common';
+import { YoutubeVideoTitleInterpreter } from './services/youtube-video-title-interpreter';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
     InterpretSuggestionProvider,
     GenreSuggestionProvider,
     TagTypeSuggestionProvider,
+    YoutubeVideoTitleInterpreter,
   ]
 })
 export class MainModule { }

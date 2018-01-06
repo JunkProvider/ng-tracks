@@ -26,14 +26,15 @@
     display: inline-block;
     width: 16px;
     height: 16px;
+    margin-left: 4px;
     border: 1px solid #404040;
     border-radius: 100%;
     user-select: none;
 }
 
 .rating > i.active {
-    background-color: #ffcc00;
-    border-color: #ffcc00;
+    background-color: #ffffff;
+    border-color: #ffffff;
 }
 
 .body {
@@ -150,6 +151,7 @@ app-input {
     text-align: center;
     color: inherit;
     cursor: pointer;
+    font-weight: bold;
     transition: background-color 0.3s;
 }
 
@@ -162,26 +164,29 @@ app-input {
 .buttons > .save, .buttons > .new, .buttons > .edit {
     float: right;
     margin-left: 10px;
-    background-color: #238623;
+    background-color: #d0d0d0;
+    color: black;
 }
 
 .buttons > .save:hover, .buttons > .new:hover, .buttons > .edit:hover {
-    background-color: #2fb12f;
+    background-color: #ffffff;
 }
 
 .buttons > .discard {
     float: right;
-    background-color: #404040;
+    background-color: #b0b0b0;
+    color: black;
 }
 
 .buttons > .discard:hover {
-    background-color: #505050;
+    background-color: #ffffff;
 }
 
 .buttons > .delete {
-    background-color: #862323;
+    background-color: #b0b0b0;
+    color: black;
 }
 
 .buttons > .delete:hover {
-    background-color: #b12f2f;
+    background-color: #ffffff;
 }

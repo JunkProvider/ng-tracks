@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as youtubeIFrameLoader from 'youtube-iframe';
+import { YoutubeVidoData } from '../youtube-vido-data';
 
 @Component({
   selector: 'app-youtube-player-context',
@@ -8,6 +9,9 @@ import * as youtubeIFrameLoader from 'youtube-iframe';
 })
 export class YoutubePlayerContext implements OnInit {
   private static nextIFrameNumber = 0;
+
+  @Output()
+  readonly videoLoaded = new EventEmitter<YoutubeVidoData>();
 
   iFrameNumber: number;
 
@@ -49,12 +53,13 @@ export class YoutubePlayerContext implements OnInit {
           width: '100%',
           videoId: this.videoId,
           events: {
-            onReady: (event: any) => this.onPlayerReady(event)
+            onReady: (event: any) => this.onPlayerReady()
           }
         });
       });
     } else {
       this.player.loadVideoById(this.videoId);
+      this.onPlayerReady();
     }
   }
 
@@ -64,7 +69,8 @@ export class YoutubePlayerContext implements OnInit {
     }
   }
 
-  private onPlayerReady(event: any) {
+  private onPlayerReady() {
+    this.videoLoaded.next(this.player.getVideoData());
     this.playerReady = true;
   }
 }

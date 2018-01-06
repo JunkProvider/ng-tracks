@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { YoutubeVidoData } from './youtube-vido-data';
 
 @Component({
   selector: 'app-youtube-player',
@@ -7,6 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class YoutubePlayer implements OnInit {
   private _videoId: string = null;
+
+  @Output()
+  readonly videoLoaded = new EventEmitter<YoutubeVidoData>();
 
   get videoId() { return this._videoId; }
 

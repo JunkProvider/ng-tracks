@@ -44,7 +44,10 @@
       </label>
     </div>
     <div *ngIf="youtubeLink" class="video">
-      <app-youtube-player [videoId]="youtubeLink.videoId"></app-youtube-player>
+      <app-youtube-player
+        [videoId]="youtubeLink.videoId"
+        (videoLoaded)="onYoutubeVideoLoaded($event)"
+      ></app-youtube-player>
     </div>
     <label *ngIf="editing" class="links">
       <span>Link</span>

@@ -11,6 +11,8 @@ import { LinkParser } from '../../services/link-parser';
 import { RateTrackService } from '../../services/rate-track-service';
 import * as youtubeIFrameLoader from 'youtube-iframe';
 import { YoutubeLink } from '../../model/youtube-link';
+import { YoutubeVidoData } from '../youtube-player/youtube-vido-data';
+import { YoutubeVideoTitleInterpreter } from '../../services/youtube-video-title-interpreter';
 export interface TagState {
   name: string;
   value: string;
@@ -52,6 +54,7 @@ export class TrackDetails implements OnInit {
   constructor(
     private readonly sanitizer: DomSanitizer,
     private readonly linkParser: LinkParser,
+    private readonly youtubeVideoTitleInterpreter: YoutubeVideoTitleInterpreter,
     private readonly saveTrackService: SaveTrackService,
     private readonly rateTrackService: RateTrackService,
     private readonly deleteTrackService: DeleteTrackService,
@@ -116,7 +119,7 @@ export class TrackDetails implements OnInit {
 
   validateTagValue(index: number) {
     const tag = this.track.tags[index];
-    let value = parseInt(tag.value.trim(), 10);
+    const value = parseInt(tag.value.trim(), 10);
     if (value == null || isNaN(value) || !isFinite(value) || value < 1) {
       tag.value = '';
     }
@@ -133,6 +136,24 @@ export class TrackDetails implements OnInit {
   onChangedByUser() {
     this.changed = true;
     this.valid = this.track.title.trim().length > 0;
+  }
+
+  onYoutubeVideoLoaded(data: YoutubeVidoData) {
+    if (this.track.id != null || this.track.title.trim().length > 0 || this.track.interpret.trim().length > 0) {
+      return;
+    }
+
+    const interpretationResult = this.youtubeVideoTitleInterpreter.interpret(data.title);
+
+    if (interpretationResult.title != null) {
+      this.track.title = interpretationResult.title;
+    }
+
+    if (interpretationResult.interprets != null) {
+      this.track.interpret = interpretationResult.interprets.join(', ');
+    }
+
+    this.onChangedByUser();
   }
 
   new() {

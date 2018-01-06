@@ -49,8 +49,7 @@
     margin: 0;
     padding: 0;
     border: none;
-    border-radius: 100%;
-    background-color: #862323;
+    background-color: inherit;
     overflow: hidden;
     color: inherit;
     cursor: pointer;
@@ -63,7 +62,7 @@
 }
 
 .filter button.remove:hover {
-    background-color: #b12f2f;
+    color: white;
 }
 
 .filter-form-container {
@@ -112,6 +111,7 @@
     text-align: center;
     color: inherit;
     cursor: pointer;
+    font-weight: bold;
     transition: background-color 0.3s;
 }
 
@@ -124,18 +124,10 @@
 .buttons > .save, .buttons > .new {
     float: right;
     margin-left: 10px;
-    background-color: #238623;
+    background-color: #d0d0d0;
+    color: black;
 }
 
 .buttons > .save:hover, .buttons > .new:hover {
-    background-color: #2fb12f;
-}
-
-.buttons > .discard {
-    float: right;
-    background-color: #404040;
-}
-
-.buttons > .discard:hover {
-    background-color: #505050;
+    background-color: #ffffff;
 }
