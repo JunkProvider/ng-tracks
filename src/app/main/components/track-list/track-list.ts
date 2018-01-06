@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Track } from './../../model/track';
 import { AppModel } from '../../model/app-model';
-import { del } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-track-list',
@@ -13,23 +12,28 @@ export class TrackList implements OnInit {
   selectedTrack: Track = null;
   pageSize: number = null;
   pageIndex = 0;
-
+  pageCount = 1;
+  loading = false;
 
   constructor(private readonly model: AppModel) { }
 
   ngOnInit() {
-    this.tracks = this.model.tracks;
-    this.model.tracksChangedEvent.add(this, () => this.tracks = this.model.tracks);
-    this.model.loadTracks();
+    this.model.tracksChangedEvent.add(this, this.updateTracks);
+    this.updateTracks();
 
-    this.selectedTrack = this.model.selectedTrack;
-    this.model.selectedTrackChangedEvent.add(this, () => this.selectedTrack = this.model.selectedTrack);
+    this.model.selectedTrackChangedEvent.add(this, this.updateSelectedTrack);
+    this.updateSelectedTrack();
 
-    this.pageSize = this.model.pageSize;
-    this.pageIndex = this.model.pageIndex;
+    this.model.paginationChangedEvent.add(this, this.updatePagination);
+    this.updatePagination();
+
+    this.model.loadingChangedEvent.add(this, this.updateLoading);
+    this.updateLoading();
 
     document.addEventListener('mousewheel', (event: any) => this.scroll(event.wheelData));
     document.addEventListener('DOMMouseScroll', (event: any) => this.scroll(event.detail));
+
+    this.model.loadTracks();
   }
 
   select(track: Track) {
@@ -42,5 +46,23 @@ export class TrackList implements OnInit {
     } else {
       this.model.previousPage();
     }
+  }
+
+  private updateTracks() {
+    this.tracks = this.model.tracks;
+  }
+
+  private updateSelectedTrack() {
+    this.selectedTrack = this.model.selectedTrack;
+  }
+
+  private updatePagination() {
+    this.pageSize = this.model.pageSize;
+    this.pageIndex = this.model.pageIndex;
+    this.pageCount = this.model.pageCount;
+  }
+
+  private updateLoading() {
+    this.loading = this.model.loading;
   }
 }

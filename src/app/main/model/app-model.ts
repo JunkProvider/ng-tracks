@@ -8,6 +8,7 @@ import {InterpretProvider} from '../providers/interpret-provider';
 import {TagTypeProvider} from '../providers/tag-type-provider';
 import { CookieService } from 'angular2-cookie/core';
 import { filterDefinitions } from './filter-definitions';
+import { PagedQueryResult } from '../providers/paged-query-result';
 
 @Injectable()
 export class AppModel {
@@ -15,6 +16,8 @@ export class AppModel {
     readonly selectedTrackChangedEvent = new Event<void>();
     readonly filtersChangedEvent = new Event<void>();
     readonly selectedFilterChangedEvent = new Event<void>();
+    readonly paginationChangedEvent = new Event<void>();
+    readonly loadingChangedEvent = new Event<void>();
 
     private loadTracksDelay = new Timeout(2000);
     private _tracks: Track[] = [];
@@ -24,6 +27,8 @@ export class AppModel {
     private _pageSize = 10;
     private _pageIndex = 0;
     private _totalCount = 0;
+    private _loading = 0;
+    private _invalid = false;
 
     get tracks() { return this._tracks.slice(); }
     get selectedTrack() { return this._selectedTrack; }
@@ -33,6 +38,8 @@ export class AppModel {
     get pageIndex() { return this._pageIndex; }
     get pageCount() { return Math.max(1, Math.ceil(this._totalCount / this._pageSize)); }
     get totalCount() { return this._totalCount; }
+    get loading() { return this._loading > 0; }
+    get invalid() { return this._invalid; }
 
     constructor(
       private readonly cookies: CookieService,
@@ -47,25 +54,35 @@ export class AppModel {
     }
 
     loadTracks(): Promise<void> {
-        this.loadTracksDelay.stop();
-        const prevSelectedTrackId = this.selectedTrack ? this.selectedTrack.id : null;
-        let selectedTrackChanged = false;
-        const filters = this.filters.map(filter => filter.getData());
-        return this.trackProvider.getBy(filters, this.pageIndex * this.pageSize, this.pageSize).then(result => {
-            const tracks = result.items;
-            let selectedTrack = tracks.find(track => track.id === prevSelectedTrackId);
-            if (!selectedTrack) {
-                selectedTrack = EMPTY_TRACK;
-                selectedTrackChanged = true;
-            }
-            this._tracks = tracks;
-            this._totalCount = result.totalCount;
-            this._selectedTrack = selectedTrack;
-            this.tracksChangedEvent.trigger(this, null);
-            if (selectedTrackChanged) {
-                this.selectedTrackChangedEvent.trigger(this, null);
-            }
-        });
+      this.loadTracksDelay.stop();
+
+      const filters = this.filters.map(filter => filter.getData());
+      const promise = this.trackProvider.getBy(filters, this.pageIndex * this.pageSize, this.pageSize).then(result => {
+        this.onTracksLoaded(result);
+        return null;
+      });
+
+      const loadingChanged = !this.loading;
+      this._loading++;
+      if (loadingChanged) {
+        this.loadingChangedEvent.trigger(this, null);
+      }
+
+      return promise;
+    }
+
+    private onTracksLoaded(result: PagedQueryResult<Track>) {
+      this._tracks = result.items;
+      this._totalCount = result.totalCount;
+
+      this.tracksChangedEvent.trigger(this, null);
+
+      this.paginationChangedEvent.trigger(this, null);
+
+      this._loading--;
+      if (!this.loading) {
+        this.loadingChangedEvent.trigger(this, null);
+      }
     }
 
     selectTrack(track: Track) {
@@ -75,13 +92,12 @@ export class AppModel {
 
     createAndAddNewFilter() {
         const filter = createNewFilter();
-        filter.changedEvent.add(this, this.onFilterChanged);
+        filter.changedEvent.add(this, this.onFiltersChanged);
         this._filters.push(filter);
         this._selectedFilter = filter;
         this.filtersChangedEvent.trigger(this, null);
         this.selectedFilterChangedEvent.trigger(this, null);
-        this.loadTracksAfterDelay();
-        this.saveFilters();
+        this.onFiltersChanged();
     }
 
     removeFilter(filter: Filter) {
@@ -89,15 +105,14 @@ export class AppModel {
         if (index === -1) {
             return;
         }
-        filter.changedEvent.remove(this, this.onFilterChanged);
+        filter.changedEvent.remove(this, this.onFiltersChanged);
         this._filters.splice(index, 1);
         this.filtersChangedEvent.trigger(this, null);
         if (this._selectedFilter === filter) {
             this._selectedFilter = null;
             this.selectedFilterChangedEvent.trigger(this, null);
         }
-        this.loadTracksAfterDelay();
-        this.saveFilters();
+        this.onFiltersChanged();
     }
 
     selectFilter(filter: Filter) {
@@ -111,6 +126,7 @@ export class AppModel {
       }
       this._pageIndex++;
       this.loadTracks();
+      this.paginationChangedEvent.trigger(this, null);
     }
 
     previousPage() {
@@ -119,11 +135,14 @@ export class AppModel {
         }
         this._pageIndex--;
         this.loadTracks();
+      this.paginationChangedEvent.trigger(this, null);
     }
 
-    private onFilterChanged() {
-        this.loadTracksAfterDelay();
+    private onFiltersChanged() {
+        // this.loadTracksAfterDelay();
         this.saveFilters();
+        this._pageIndex = 0;
+        this.paginationChangedEvent.trigger(this, null);
     }
 
     private loadFilters() {

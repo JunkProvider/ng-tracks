@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { FilterData } from '../model/filter';
 import { TrackDeserializer } from './track-deserializer';
 import { Track } from '../model/track';
@@ -18,7 +18,8 @@ export class TrackProvider {
           .set('offset', JSON.stringify(offset))
           .set('limit', JSON.stringify(limit));
         return this.httpClient.get<any>(appConfig.api + '/track', { params: params }).pipe(
-            map<{ data: PagedQueryResult<TrackDto> }, PagedQueryResult<Track>>(data => this.deserializePagedResult(data.data))
+            map<{ data: PagedQueryResult<TrackDto> }, PagedQueryResult<Track>>(data => this.deserializePagedResult(data.data)),
+            delay(1000)
         ).toPromise();
     }
 
