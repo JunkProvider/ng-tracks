@@ -1,11 +1,17 @@
 .sections {
     width: 100%;
     height: 100%;
+    border: 1px solid #303030;
 }
 
 .sections > * {
     width: 100%;
     height: 200px;
+    border-top: 1px solid #303030;
+}
+
+.sections > *:not(:last-child) {
+    border-bottom: 1px solid #303030;
 }
 
 .sections > *:last-child {

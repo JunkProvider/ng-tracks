@@ -6,7 +6,7 @@ body {
     width: 100vw;
     height: 100vh;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     overflow: hidden;
     /*background-color: #202020;*/
     background-color: #080808;

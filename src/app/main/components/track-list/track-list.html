@@ -4,6 +4,7 @@
       <span>Page</span> <span>{{ (pageIndex + 1) }}</span>/<span>{{ pageCount }}</span>
     </span>
     <span class="debug-item" *ngIf="loading">loading</span>
+    <span class="debug-item"><button (click)="reload()">reload</button></span>
   </div>
   <ul class="body clearfix">
     <li
@@ -34,4 +35,5 @@
       </dl>
     </li>
   </ul>
+  <div *ngIf="loading" class="loading-mask"></div>
 </div>

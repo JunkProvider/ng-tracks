@@ -74,9 +74,9 @@ export class AppModel {
     private onTracksLoaded(result: PagedQueryResult<Track>) {
       this._tracks = result.items;
       this._totalCount = result.totalCount;
+      this._pageIndex = Math.min(this.pageIndex, this.pageCount - 1);
 
       this.tracksChangedEvent.trigger(this, null);
-
       this.paginationChangedEvent.trigger(this, null);
 
       this._loading--;
@@ -141,7 +141,7 @@ export class AppModel {
     private onFiltersChanged() {
         // this.loadTracksAfterDelay();
         this.saveFilters();
-        this._pageIndex = 0;
+        // this._pageIndex = 0;
         this.paginationChangedEvent.trigger(this, null);
     }
 

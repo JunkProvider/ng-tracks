@@ -48,6 +48,10 @@ export class TrackList implements OnInit {
     }
   }
 
+  reload() {
+    this.model.loadTracks();
+  }
+
   private updateTracks() {
     this.tracks = this.model.tracks;
   }

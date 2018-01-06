@@ -1,14 +1,15 @@
 :host > div {
+  position: relative;
 	float: left;
   width: calc(100% - 600px);
   height: 100%;
-  border-right: 1px solid #303030;
+  border: 1px solid #303030;
 }
 
 :host > div > .head {
   height: 40px;
-  padding: 10px;
-
+  padding: 5px;
+  border-bottom: 1px solid #404040;
 }
 
 :host > div > .head .debug-item {
@@ -19,16 +20,17 @@
 ul {
   width: 100%;
 	height: calc(100% - 40px);
-	padding: 10px;
 	overflow: hidden;
 }
 
 li {
 	width: 100%;
 	padding: 5px;
-	border: 1px solid #404040;
-	border-radius: 10px;
 	cursor: pointer;
+}
+
+li:not(:last-child) {
+  border-bottom: 1px solid #404040;
 }
 
 li:hover {
@@ -84,4 +86,14 @@ li dd {
 
 li .interpret:not(:last-child):after, .genre:not(:last-child):after {
 	content: ", ";
+}
+
+.loading-mask {
+  position: absolute;;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.2;
 }
