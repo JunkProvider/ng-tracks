@@ -21,11 +21,18 @@ export class AppModel {
     private _selectedTrack: Track = EMPTY_TRACK;
     private _filters: Filter[] = [];
     private _selectedFilter: Filter = null;
+    private _pageSize = 10;
+    private _pageIndex = 0;
+    private _totalCount = 0;
 
     get tracks() { return this._tracks.slice(); }
     get selectedTrack() { return this._selectedTrack; }
     get filters() { return this._filters.slice(); }
     get selectedFilter() { return this._selectedFilter; }
+    get pageSize() { return this._pageSize; }
+    get pageIndex() { return this._pageIndex; }
+    get pageCount() { return Math.max(1, Math.ceil(this._totalCount / this._pageSize)); }
+    get totalCount() { return this._totalCount; }
 
     constructor(
       private readonly cookies: CookieService,
@@ -43,13 +50,16 @@ export class AppModel {
         this.loadTracksDelay.stop();
         const prevSelectedTrackId = this.selectedTrack ? this.selectedTrack.id : null;
         let selectedTrackChanged = false;
-        return this.trackProvider.getBy(this.filters.map(filter => filter.getData())).then(tracks => {
+        const filters = this.filters.map(filter => filter.getData());
+        return this.trackProvider.getBy(filters, this.pageIndex * this.pageSize, this.pageSize).then(result => {
+            const tracks = result.items;
             let selectedTrack = tracks.find(track => track.id === prevSelectedTrackId);
             if (!selectedTrack) {
                 selectedTrack = EMPTY_TRACK;
                 selectedTrackChanged = true;
             }
             this._tracks = tracks;
+            this._totalCount = result.totalCount;
             this._selectedTrack = selectedTrack;
             this.tracksChangedEvent.trigger(this, null);
             if (selectedTrackChanged) {
@@ -93,6 +103,22 @@ export class AppModel {
     selectFilter(filter: Filter) {
         this._selectedFilter = filter;
         this.selectedFilterChangedEvent.trigger(this, null);
+    }
+
+    nextPage() {
+      if (this.pageIndex === this.pageCount - 1) {
+        return;
+      }
+      this._pageIndex++;
+      this.loadTracks();
+    }
+
+    previousPage() {
+        if (this.pageIndex === 0) {
+          return;
+        }
+        this._pageIndex--;
+        this.loadTracks();
     }
 
     private onFilterChanged() {

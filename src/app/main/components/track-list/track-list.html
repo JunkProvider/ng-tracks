@@ -2,6 +2,7 @@
   <li
     *ngFor="let track of tracks"
     [ngClass]="{ 'selected': selectedTrack.id === track.id }"
+    [ngStyle]="{ 'height': (100 / pageSize).toFixed(2) + '%' }"
     (click)="select(track)"
   >
     <div class="head">
@@ -22,7 +23,7 @@
       <dt>Genre</dt>
       <dd>
         <span *ngFor="let genre of track.genres;" class="genre">{{ genre.name }}</span>
-      </dd> 
+      </dd>
     </dl>
   </li>
 </ul>
