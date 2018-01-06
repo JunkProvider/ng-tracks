@@ -6,6 +6,7 @@ import {map, catchError} from 'rxjs/operators';
 import { Track } from './../model/track';
 import { FilterData } from '../model/filter';
 import { Genre } from '../model/genre';
+import { appConfig } from '../app.config';
 
  @Injectable()
 export class GenreProvider {
@@ -23,7 +24,7 @@ export class GenreProvider {
         if (this.allGenres) {
             return Promise.resolve(this.allGenres);
         }
-        return this.httpClient.get<any>('http://localhost:8080/genre').pipe(
+        return this.httpClient.get<any>(appConfig.api + '/genre').pipe(
             map<{ data: Genre[] }, Genre[]>(data => data.data)
         ).toPromise().then(genres => { this.allGenres = genres; return genres; });
     }

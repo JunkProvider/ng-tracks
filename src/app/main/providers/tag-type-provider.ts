@@ -6,6 +6,7 @@ import {map, catchError} from 'rxjs/operators';
 import { Track } from './../model/track';
 import { FilterData } from '../model/filter';
 import { TagType } from '../model/tag-type';
+import { appConfig } from '../app.config';
 
  @Injectable()
 export class TagTypeProvider {
@@ -23,7 +24,7 @@ export class TagTypeProvider {
         if (this.allTagTypes) {
             return Promise.resolve(this.allTagTypes);
         }
-        return this.httpClient.get<any>('http://localhost:8080/tag-type').pipe(
+        return this.httpClient.get<any>(appConfig.api + '/tag-type').pipe(
             map<{ data: TagType[] }, TagType[]>(data => data.data)
         ).toPromise().then(tagTypes => { this.allTagTypes = tagTypes; return tagTypes; });
     }

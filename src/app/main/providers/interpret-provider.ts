@@ -6,6 +6,7 @@ import {map, catchError} from 'rxjs/operators';
 import { Track } from './../model/track';
 import { FilterData } from '../model/filter';
 import { Interpret } from '../model/interpret';
+import { appConfig } from '../app.config';
 
  @Injectable()
 export class InterpretProvider {
@@ -23,7 +24,7 @@ export class InterpretProvider {
         if (this.allInterprets) {
             return Promise.resolve(this.allInterprets);
         }
-        return this.httpClient.get<any>('http://localhost:8080/interpret').pipe(
+        return this.httpClient.get<any>(appConfig.api + '/interpret').pipe(
             map<{ data: Interpret[] }, Interpret[]>(data => data.data)
         ).toPromise().then(interprets => { this.allInterprets = interprets; return interprets; });
     }
