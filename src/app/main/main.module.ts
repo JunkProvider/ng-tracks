@@ -9,7 +9,7 @@ import { SaveTrackService } from './services/save-track-service';
 import { DeleteTrackService } from './services/delete-track-service';
 import { TrackList } from './components/track-list/track-list';
 import { TrackDetails } from './components/track-details/track-details';
-import { AppModel } from './app-model';
+import { AppModel } from './model/app-model';
 import { NavigationBar } from './components/navigation-bar/navigation-bar';
 import { FilterSection } from './components/filter-section/filter-section';
 import { OperatorSelect } from './components/filter-section/operator-select/operator-select';

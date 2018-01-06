@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Track } from './../../model/track';
-import { AppModel } from './../../app-model';
+import { AppModel } from '../../model/app-model';
 
 @Component({
   selector: 'app-track-list',
@@ -17,7 +17,7 @@ export class TrackList implements OnInit {
     this.tracks = this.model.tracks;
     this.model.tracksChangedEvent.add(this, () => this.tracks = this.model.tracks);
     this.model.loadTracks();
-    
+
     this.selectedTrack = this.model.selectedTrack;
     this.model.selectedTrackChangedEvent.add(this, () => this.selectedTrack = this.model.selectedTrack);
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EMPTY_TRACK } from '../../model/track';
-import { AppModel } from '../../app-model';
+import { AppModel } from '../../model/app-model';
 import { SaveTrackService } from '../../services/save-track-service';
 import { DeleteTrackService } from '../../services/delete-track-service';
 import { TagTypeSuggestionProvider } from '../../providers/tag-type-suggestion-provider';

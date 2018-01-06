@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppModel } from './../../app-model';
+import { AppModel } from '../../model/app-model';
 import { Filter } from '../../model/filter';
 import { filterDefinitions, filterDefinitionsAsArray } from '../../model/filter-definitions';
 import {GenreSuggestionProvider} from '../../providers/genre-suggestion-provider';

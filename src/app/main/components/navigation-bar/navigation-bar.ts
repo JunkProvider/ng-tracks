@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppModel } from './../../app-model';
+import { AppModel } from '../../model/app-model';
 
 @Component({
   selector: 'app-navigation-bar',

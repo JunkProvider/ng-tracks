@@ -1,13 +1,13 @@
-import { Track, EMPTY_TRACK } from './model/track';
-import { TrackProvider } from './providers/track-provider';
+import { Track, EMPTY_TRACK } from './track';
+import { TrackProvider } from '../providers/track-provider';
 import { Injectable } from '@angular/core';
-import { createNewFilter, Filter, FilterData } from './model/filter';
+import { createNewFilter, Filter, FilterData } from './filter';
 import {Event, Timeout} from '@junkprovider/common';
-import {GenreProvider} from './providers/genre-provider';
-import {InterpretProvider} from './providers/interpret-provider';
-import {TagTypeProvider} from './providers/tag-type-provider';
+import {GenreProvider} from '../providers/genre-provider';
+import {InterpretProvider} from '../providers/interpret-provider';
+import {TagTypeProvider} from '../providers/tag-type-provider';
 import { CookieService } from 'angular2-cookie/core';
-import { filterDefinitions } from './model/filter-definitions';
+import { filterDefinitions } from './filter-definitions';
 
 @Injectable()
 export class AppModel {
