@@ -12,11 +12,5 @@
     - A search field should be offered.
     - The search text applies to 'Title' and 'Interpret'.
 
-- Pagination
-    - The Track List requires Pagination without a hell ugly Browser Scroll Bar.
-
-- Rating
-    - A Track can be rated by clicking the desired Amount of Stars in the Detail View.
-
 - Confirm Delete
     - A Confirmation Dialog must be displayed when the User clicks the 'Delete' Button.
