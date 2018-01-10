@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from './../common/common.module';
+import { CommonModule } from '../common/common.module';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { TrackProvider } from './providers/track-provider';
 import { SaveTrackService } from './services/save-track-service';
@@ -31,44 +31,44 @@ import { YoutubeVideoTitleInterpreter } from './services/youtube-video-title-int
 import { LoadingIndicator } from './components/loading-indicator/loading-indicator';
 
 @NgModule({
-  declarations: [
-    Page,
-    NavigationBar,
-    FilterSection,
-    OperatorSelect,
-    TrackList,
-    TrackDetails,
-    YoutubePlayer,
-    YoutubePlayerContext,
-    LoadingIndicator
-  ],
-  imports: [
-    BrowserModule,
-    RouterModule,
-    HttpClientModule,
-    NgCommonModule,
-    CommonModule
-  ],
-  exports: [
-    Page
-  ],
-  providers: [
-    CookieService,
-    AppModel,
-    LinkParser,
-    LinkDeserializer,
-    TrackDeserializer,
-    TrackProvider,
-    InterpretProvider,
-    GenreProvider,
-    TagTypeProvider,
-    SaveTrackService,
-    RateTrackService,
-    DeleteTrackService,
-    InterpretSuggestionProvider,
-    GenreSuggestionProvider,
-    TagTypeSuggestionProvider,
-    YoutubeVideoTitleInterpreter,
-  ]
+	declarations: [
+		Page,
+		NavigationBar,
+		FilterSection,
+		OperatorSelect,
+		TrackList,
+		TrackDetails,
+		YoutubePlayer,
+		YoutubePlayerContext,
+		LoadingIndicator
+	],
+	imports: [
+		BrowserModule,
+		RouterModule,
+		HttpClientModule,
+		NgCommonModule,
+		CommonModule
+	],
+	exports: [
+		Page
+	],
+	providers: [
+		CookieService,
+		AppModel,
+		LinkParser,
+		LinkDeserializer,
+		TrackDeserializer,
+		TrackProvider,
+		InterpretProvider,
+		GenreProvider,
+		TagTypeProvider,
+		SaveTrackService,
+		RateTrackService,
+		DeleteTrackService,
+		InterpretSuggestionProvider,
+		GenreSuggestionProvider,
+		TagTypeSuggestionProvider,
+		YoutubeVideoTitleInterpreter,
+	]
 })
 export class MainModule { }

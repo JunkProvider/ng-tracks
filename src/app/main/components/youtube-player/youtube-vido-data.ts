@@ -1,4 +1,4 @@
-export interface YoutubeVidoData {
-  title: string;
-  author: string;
+export interface YoutubeVideoData {
+	title: string;
+	author: string;
 }

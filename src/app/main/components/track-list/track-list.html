@@ -1,41 +1,41 @@
 <div>
-  <div class="head">
-    <span class="debug-item">
-      <span>Page</span> <span>{{ (pageIndex + 1) }}</span>/<span>{{ pageCount }}</span>
-    </span>
-    <span class="debug-item" *ngIf="loading">loading</span>
-    <span class="debug-item"><button (click)="reload()">reload</button></span>
-  </div>
-  <ul [id]="listElementId" class="body clearfix">
-    <li
-      *ngFor="let track of tracks; let i = index"
-      [ngClass]="{ 'selected': track && selectedTrack.id === track.id, 'closing': i === pageSize - 1 }"
-      [ngStyle]="{ 'height': (100 / pageSize).toFixed(2) + '%' }"
-      (click)="select(track)"
-    >
-      <div class="head">
-        <span class="title">{{ track.title }}</span>
-        <span class="rating">
-        <i [ngClass]="{ 'active': track.rating >= 5 }"></i>
-        <i [ngClass]="{ 'active': track.rating >= 4 }"></i>
-        <i [ngClass]="{ 'active': track.rating >= 3 }"></i>
-        <i [ngClass]="{ 'active': track.rating >= 2 }"></i>
-        <i [ngClass]="{ 'active': track.rating >= 1 }"></i>
-      </span>
-      </div>
-      <dl>
-        <dt>Interpret</dt>
-        <dd>
-          <span *ngFor="let interpret of track.interprets;" class="interpret">{{ interpret.name }}</span>
-        </dd>
-        <dt>Genre</dt>
-        <dd>
-          <span *ngFor="let genre of track.genres;" class="genre">{{ genre.name }}</span>
-        </dd>
-      </dl>
-    </li>
-  </ul>
-  <div *ngIf="loading" class="loading-mask">
-    <app-loading-indicator></app-loading-indicator>
-  </div>
+	<div class="head">
+		<span class="debug-item">
+			<span>Page</span> <span>{{ (pageIndex + 1) }}</span>/<span>{{ pageCount }}</span>
+		</span>
+		<span class="debug-item" *ngIf="loading">loading</span>
+		<span class="debug-item"><button (click)="reload()">reload</button></span>
+	</div>
+	<ul [id]="listElementId" class="body clearfix">
+		<li
+			*ngFor="let track of tracks; let i = index"
+			[ngClass]="{ 'selected': track && selectedTrack.id === track.id, 'closing': i === pageSize - 1 }"
+			[ngStyle]="{ 'height': (100 / pageSize).toFixed(2) + '%' }"
+			(click)="select(track)"
+		>
+			<div class="head">
+				<span class="title">{{ track.title }}</span>
+				<span class="rating">
+				<i [ngClass]="{ 'active': track.rating >= 5 }"></i>
+				<i [ngClass]="{ 'active': track.rating >= 4 }"></i>
+				<i [ngClass]="{ 'active': track.rating >= 3 }"></i>
+				<i [ngClass]="{ 'active': track.rating >= 2 }"></i>
+				<i [ngClass]="{ 'active': track.rating >= 1 }"></i>
+			</span>
+			</div>
+			<dl>
+				<dt>Interpret</dt>
+				<dd>
+					<span *ngFor="let interpret of track.interprets;" class="interpret">{{ interpret.name }}</span>
+				</dd>
+				<dt>Genre</dt>
+				<dd>
+					<span *ngFor="let genre of track.genres;" class="genre">{{ genre.name }}</span>
+				</dd>
+			</dl>
+		</li>
+	</ul>
+	<div *ngIf="loading" class="loading-mask">
+		<app-loading-indicator></app-loading-indicator>
+	</div>
 </div>

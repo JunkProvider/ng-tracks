@@ -1,133 +1,133 @@
 .filter-section {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    border-bottom: 1px solid #303030;
+		display: flex;
+		flex-direction: row;
+		height: 100%;
+		border-bottom: 1px solid #303030;
 }
 
 .column {
-    float: left;
-    height: 100%;
+		float: left;
+		height: 100%;
 }
 
 .column:first-child {
-    flex-grow: 1;
-    border-right: 1px solid #303030;
+		flex-grow: 1;
+		border-right: 1px solid #303030;
 }
 
 .column:last-child {
-    width: 600px;
+		width: 600px;
 }
 
 .filters {
-    height: calc(100% - 25px);
-    padding: 10px;
+		height: calc(100% - 25px);
+		padding: 10px;
 }
 
 .filter {
-    height: 20px;
-    cursor: default;
+		height: 20px;
+		cursor: default;
 }
 
 .filter > * {
-    vertical-align: middle;
+		vertical-align: middle;
 }
 
 .filter .text {
-    display: inline-block;
-    cursor: pointer;
+		display: inline-block;
+		cursor: pointer;
 }
 
 .filter .text:hover {
-    color: #c0c0c0;
+		color: #c0c0c0;
 }
 
 .filter button.remove {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    background-color: inherit;
-    overflow: hidden;
-    color: inherit;
-    cursor: pointer;
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		margin: 0;
+		padding: 0;
+		border: none;
+		background-color: inherit;
+		overflow: hidden;
+		color: inherit;
+		cursor: pointer;
 }
 
 .filter button.remove > span {
-    display: block;
-    margin-top: -10px;
-    font-size: 24px;
+		display: block;
+		margin-top: -10px;
+		font-size: 24px;
 }
 
 .filter button.remove:hover {
-    color: white;
+		color: white;
 }
 
 .filter-form-container {
-    width: 100%;
-    height: calc(100% - 48px);
+		width: 100%;
+		height: calc(100% - 48px);
 }
 
 .filter-form {
-    width: 100%;
-    height: 100%;
-    padding: 5px;
+		width: 100%;
+		height: 100%;
+		padding: 5px;
 }
 
 .filter-form input, .filter-form select {
-    display: block;
-    width: 100%;
-    height: 25px;
-    margin-bottom: 5px;
-    padding: 0;
-    border: none;
-    background-color: #181818;
-    color: inherit;
+		display: block;
+		width: 100%;
+		height: 25px;
+		margin-bottom: 5px;
+		padding: 0;
+		border: none;
+		background-color: #181818;
+		color: inherit;
 }
 
 .filter-form input {
-    padding: 0 0 0 5px;
+		padding: 0 0 0 5px;
 }
 
 .filter-form option {
-    padding: 0;
+		padding: 0;
 }
 
 .buttons {
-    width: 100%;
-    height: 48px;
-    padding: 10px;
+		width: 100%;
+		height: 48px;
+		padding: 10px;
 }
 
 .buttons > button {
-    display: block;
-    float: left;
-    height: 100%;
-    min-width: 80px;
-    padding: 0 8px 4px 8px;
-    border: none;
-    text-align: center;
-    color: inherit;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
+		display: block;
+		float: left;
+		height: 100%;
+		min-width: 80px;
+		padding: 0 8px 4px 8px;
+		border: none;
+		text-align: center;
+		color: inherit;
+		cursor: pointer;
+		font-weight: bold;
+		transition: background-color 0.3s;
 }
 
 .buttons > button:disabled {
-    background-color: #303030;
-    color: #909090;
-    pointer-events: none;
+		background-color: #303030;
+		color: #909090;
+		pointer-events: none;
 }
 
 .buttons > .save, .buttons > .new {
-    float: right;
-    margin-left: 10px;
-    background-color: #d0d0d0;
-    color: black;
+		float: right;
+		margin-left: 10px;
+		background-color: #d0d0d0;
+		color: black;
 }
 
 .buttons > .save:hover, .buttons > .new:hover {
-    background-color: #ffffff;
+		background-color: #ffffff;
 }

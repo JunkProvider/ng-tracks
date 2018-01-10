@@ -6,248 +6,243 @@ import { DeleteTrackService } from '../../services/delete-track-service';
 import { TagTypeSuggestionProvider } from '../../providers/tag-type-suggestion-provider';
 import { InterpretSuggestionProvider } from '../../providers/interpret-suggestion-provider';
 import { GenreSuggestionProvider } from '../../providers/genre-suggestion-provider';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer} from '@angular/platform-browser';
 import { LinkParser } from '../../services/link-parser';
 import { RateTrackService } from '../../services/rate-track-service';
-import * as youtubeIFrameLoader from 'youtube-iframe';
 import { YoutubeLink } from '../../model/youtube-link';
-import { YoutubeVidoData } from '../youtube-player/youtube-vido-data';
+import { YoutubeVideoData } from '../youtube-player/youtube-vido-data';
 import { YoutubeVideoTitleInterpreter } from '../../services/youtube-video-title-interpreter';
 export interface TagState {
-  name: string;
-  value: string;
+	name: string;
+	value: string;
 }
 
 export interface TrackState {
-  id: number;
-  title: string;
-  interpret: string;
-  genre: string;
-  tags: TagState[];
-  links: string[];
-  joinedLinks: string;
-  rating: number;
+	id: number;
+	title: string;
+	interpret: string;
+	genre: string;
+	tags: TagState[];
+	links: string[];
+	joinedLinks: string;
+	rating: number;
 }
 
 @Component({
-  selector: 'app-track-details',
-  templateUrl: './track-details.html',
-  styleUrls: ['./track-details.css']
+	selector: 'app-track-details',
+	templateUrl: './track-details.html',
+	styleUrls: ['./track-details.css']
 })
 export class TrackDetails implements OnInit {
-  private static nextYoutubeIFrameNumber = 0;
 
-  ratingOptions = [
-    { description: 'Not my Taste.' },
-    { description: 'It\'s ok, like listening to it.' },
-    { description: 'Pretty good Music.' },
-    { description: 'Blin this is good.' },
-    { description: 'Awesome. One of my Favourites!' }
-  ];
-  unchangedTrack: TrackState = null;
-  track: TrackState = null;
-  editing = false;
-  changed = false;
-  valid = true;
-  youtubeLink: YoutubeLink = null;
 
-  constructor(
-    private readonly sanitizer: DomSanitizer,
-    private readonly linkParser: LinkParser,
-    private readonly youtubeVideoTitleInterpreter: YoutubeVideoTitleInterpreter,
-    private readonly saveTrackService: SaveTrackService,
-    private readonly rateTrackService: RateTrackService,
-    private readonly deleteTrackService: DeleteTrackService,
-    private readonly interpretSuggestionProvider: InterpretSuggestionProvider,
-    private readonly genreSuggestionProvider: GenreSuggestionProvider,
-    private readonly tagTypeSuggetionProvider: TagTypeSuggestionProvider,
-    private readonly model: AppModel
-  ) {}
+	ratingOptions = [
+		{ description: 'Not my Taste.' },
+		{ description: 'It\'s ok, like listening to it.' },
+		{ description: 'Pretty good Music.' },
+		{ description: 'Blin this is good.' },
+		{ description: 'Awesome. One of my Favourites!' }
+	];
+	unchangedTrack: TrackState = null;
+	track: TrackState = null;
+	editing = false;
+	changed = false;
+	valid = true;
+	youtubeLink: YoutubeLink = null;
 
-  ngOnInit() {
-    this.model.selectedTrackChangedEvent.add(this, this.update);
-    this.update();
-  }
+	constructor(
+		private readonly sanitizer: DomSanitizer,
+		private readonly linkParser: LinkParser,
+		private readonly youtubeVideoTitleInterpreter: YoutubeVideoTitleInterpreter,
+		private readonly saveTrackService: SaveTrackService,
+		private readonly rateTrackService: RateTrackService,
+		private readonly deleteTrackService: DeleteTrackService,
+		private readonly interpretSuggestionProvider: InterpretSuggestionProvider,
+		private readonly genreSuggestionProvider: GenreSuggestionProvider,
+		private readonly tagTypeSuggestionProvider: TagTypeSuggestionProvider,
+		private readonly model: AppModel
+	) {}
 
-  onTitleChanged(title: string) {
-    this.track.title = title;
-    this.onChangedByUser();
-  }
+	ngOnInit() {
+		this.model.selectedTrackChangedEvent.add(this, this.update);
+		this.update();
+	}
 
-  onInterpretChanged(interpretText: string) {
-    this.track.interpret = interpretText;
-    this.onChangedByUser();
-  }
+	onTitleChanged(title: string) {
+		this.track.title = title;
+		this.onChangedByUser();
+	}
 
-  onGenreChanged(genreText: string) {
-    this.track.genre = genreText;
-    this.onChangedByUser();
-  }
+	onInterpretChanged(interpretText: string) {
+		this.track.interpret = interpretText;
+		this.onChangedByUser();
+	}
 
-  onTagNameChanged(index: number, name: string) {
-    this.track.tags[index].name = name;
-    this.updateTags(index);
-  }
+	onGenreChanged(genreText: string) {
+		this.track.genre = genreText;
+		this.onChangedByUser();
+	}
 
-  onTagValueChanged(index: number, value: string) {
-    this.track.tags[index].value = value;
-    this.updateTags();
-  }
+	onTagNameChanged(index: number, name: string) {
+		this.track.tags[index].name = name;
+		this.updateTags(index);
+	}
 
-  updateTags(focused = -1) {
-    const tags = this.track.tags;
-    for (let i = 0; i < tags.length;) {
-      const tag = tags[i];
-      const tagFocused = i === focused;
-      const tagEmpty = tag.name.length === 0 && tag.value.length === 0;
-      if (!tagFocused && tagEmpty) {
-        tags.splice(i, 1);
-        if (focused > i) {
-          focused--;
-        }
-      } else {
-        i++;
-      }
-    }
-    const focusedTag = tags[focused];
-    const lastFocusedAndEmpty = focusedTag && (focusedTag.name.length === 0 && focusedTag.value.length === 0) && focused === tags.length - 1;
-    if (!lastFocusedAndEmpty && this.editing) {
-      tags.push({ name: '', value: '' });
-    }
-    this.onChangedByUser();
-  }
+	onTagValueChanged(index: number, value: string) {
+		this.track.tags[index].value = value;
+		this.updateTags();
+	}
 
-  validateTagValue(index: number) {
-    const tag = this.track.tags[index];
-    const value = parseInt(tag.value.trim(), 10);
-    if (value == null || isNaN(value) || !isFinite(value) || value < 1) {
-      tag.value = '';
-    }
-    this.onChangedByUser();
-  }
+	updateTags(focused = -1) {
+		const tags = this.track.tags;
+		for (let i = 0; i < tags.length;) {
+			const tag = tags[i];
+			const tagFocused = i === focused;
+			const tagEmpty = tag.name.length === 0 && tag.value.length === 0;
+			if (!tagFocused && tagEmpty) {
+				tags.splice(i, 1);
+				if (focused > i) {
+					focused--;
+				}
+			} else {
+				i++;
+			}
+		}
+		const focusedTag = tags[focused];
+		const lastFocusedAndEmpty = focusedTag && (focusedTag.name.length === 0 && focusedTag.value.length === 0) && focused === tags.length - 1;
+		if (!lastFocusedAndEmpty && this.editing) {
+			tags.push({ name: '', value: '' });
+		}
+		this.onChangedByUser();
+	}
 
-  onLinksChanged(linksText: string) {
-    this.track.joinedLinks = linksText.trim();
-    this.track.links = this.splitLinks(linksText);
-    this.updateEmbedLink();
-    this.onChangedByUser();
-  }
+	validateTagValue(index: number) {
+		const tag = this.track.tags[index];
+		const value = parseInt(tag.value.trim(), 10);
+		if (value == null || isNaN(value) || !isFinite(value) || value < 1) {
+			tag.value = '';
+		}
+		this.onChangedByUser();
+	}
 
-  onChangedByUser() {
-    this.changed = true;
-    this.valid = this.track.title.trim().length > 0;
-  }
+	onLinksChanged(linksText: string) {
+		this.track.joinedLinks = linksText.trim();
+		this.track.links = this.splitLinks(linksText);
+		this.updateEmbedLink();
+		this.onChangedByUser();
+	}
 
-  onYoutubeVideoLoaded(data: YoutubeVidoData) {
-    if (this.track.id != null || this.track.title.trim().length > 0 || this.track.interpret.trim().length > 0) {
-      return;
-    }
+	onChangedByUser() {
+		this.changed = true;
+		this.valid = this.track.title.trim().length > 0;
+	}
 
-    const interpretationResult = this.youtubeVideoTitleInterpreter.interpret(data.title);
+	onYoutubeVideoLoaded(data: YoutubeVideoData) {
+		if (this.track.id != null || this.track.title.trim().length > 0 || this.track.interpret.trim().length > 0) {
+			return;
+		}
 
-    if (interpretationResult.title != null) {
-      this.track.title = interpretationResult.title;
-    }
+		const interpretationResult = this.youtubeVideoTitleInterpreter.interpret(data.title);
 
-    if (interpretationResult.interprets != null) {
-      this.track.interpret = interpretationResult.interprets.join(', ');
-    }
+		if (interpretationResult.title != null) {
+			this.track.title = interpretationResult.title;
+		}
 
-    this.onChangedByUser();
-  }
+		if (interpretationResult.interprets != null) {
+			this.track.interpret = interpretationResult.interprets.join(', ');
+		}
 
-  new() {
-    this.model.selectTrack(EMPTY_TRACK);
-  }
+		this.onChangedByUser();
+	}
 
-  edit() {
-    this.editing = true;
-    this.updateTags();
-  }
+	new() {
+		this.model.selectTrack(EMPTY_TRACK);
+	}
 
-  save() {
-    const tags: { [index: string]: number; } = {};
-    for (const tagState of this.track.tags) {
-      const name = tagState.name.trim();
-      if (name.length === 0) {
-        continue;
-      }
-      const value = parseInt(tagState.value, 10);
-      if (value == null || isNaN(value) || !isFinite(value) || value < 1) {
-        continue;
-      }
-      tags[name] = value;
-    }
+	edit() {
+		this.editing = true;
+		this.updateTags();
+	}
 
-    this.saveTrackService.saveTrack({
-      id: this.track.id,
-      title: this.track.title,
-      interprets: this.track.interpret.split(',').map(interpret => interpret.trim()).filter(interpret => interpret && interpret.length > 0),
-      genres: this.track.genre.split(',').map(genre => genre.trim()).filter(genre => genre && genre.length > 0),
-      tags: tags,
-      links: this.track.links,
-      rating: this.track.rating
-    }).then((savedTrack) => this.model.loadTracks().then(() => this.model.selectTrack(savedTrack)));
+	save() {
+		const tags: { [index: string]: number; } = {};
+		for (const tagState of this.track.tags) {
+			const name = tagState.name.trim();
+			if (name.length === 0) {
+				continue;
+			}
+			const value = parseInt(tagState.value, 10);
+			if (value == null || isNaN(value) || !isFinite(value) || value < 1) {
+				continue;
+			}
+			tags[name] = value;
+		}
 
-    this.editing = false;
+		this.saveTrackService.saveTrack({
+			id: this.track.id,
+			title: this.track.title,
+			interprets: this.track.interpret.split(',').map(interpret => interpret.trim()).filter(interpret => interpret && interpret.length > 0),
+			genres: this.track.genre.split(',').map(genre => genre.trim()).filter(genre => genre && genre.length > 0),
+			tags: tags,
+			links: this.track.links,
+			rating: this.track.rating
+		}).then((savedTrack) => this.model.loadTracks().then(() => this.model.selectTrack(savedTrack)));
 
-    this.updateTags();
-  }
+		this.editing = false;
 
-  discard() {
-    this.editing = false;
-    this.update();
-  }
+		this.updateTags();
+	}
 
-  delete() {
-    this.deleteTrackService.deleteTrack(this.track.id).then(() => this.model.loadTracks());
-  }
+	discard() {
+		this.editing = false;
+		this.update();
+	}
 
-  rate(rating: number) {
-    this.track.rating = rating;
-    if (this.track.id) {
-      this.rateTrackService.rateTrack(this.track.id, rating).then(() => this.model.loadTracks());
-    }
-  }
+	delete() {
+		this.deleteTrackService.deleteTrack(this.track.id).then(() => this.model.loadTracks());
+	}
 
-  private update() {
-    const track = this.model.selectedTrack;
+	rate(rating: number) {
+		this.track.rating = rating;
+		if (this.track.id) {
+			this.rateTrackService.rateTrack(this.track.id, rating).then(() => this.model.loadTracks());
+		}
+	}
 
-    this.track = {
-      id: track.id,
-      title: track.title,
-      interpret: track.interprets.map(interpret => interpret.name).join(', '),
-      genre: track.genres.map(genre => genre.name).join(', '),
-      tags: track.tags.map(tag => ({ name: tag.type.name, value: tag.value.toFixed(0) })),
-      links: track.links.map(link => link.url),
-      joinedLinks: this.joinLinks(track.links.map(link => link.url)),
-      rating: track.rating
-    };
-    this.track.tags.push({ name: '', value: '' });
+	private update() {
+		const track = this.model.selectedTrack;
 
-    this.unchangedTrack = Object.assign({}, this.track);
-    this.changed = false;
-    this.editing = !this.track.id;
+		this.track = {
+			id: track.id,
+			title: track.title,
+			interpret: track.interprets.map(interpret => interpret.name).join(', '),
+			genre: track.genres.map(genre => genre.name).join(', '),
+			tags: track.tags.map(tag => ({ name: tag.type.name, value: tag.value.toFixed(0) })),
+			links: track.links.map(link => link.url),
+			joinedLinks: this.joinLinks(track.links.map(link => link.url)),
+			rating: track.rating
+		};
+		this.track.tags.push({ name: '', value: '' });
 
-    this.updateEmbedLink();
-    this.updateTags();
-  }
+		this.unchangedTrack = Object.assign({}, this.track);
+		this.changed = false;
+		this.editing = !this.track.id;
 
-  private updateEmbedLink() {
-    this.youtubeLink = <YoutubeLink>this.track.links
-      .map(urlStr => this.linkParser.parse(urlStr))
-      .find(link => link instanceof YoutubeLink);
-  }
+		this.updateEmbedLink();
+		this.updateTags();
+	}
 
-  private onYoutubePlayerReady(event: any) {
-    event.target.playVideo();
-  }
+	private updateEmbedLink() {
+		this.youtubeLink = <YoutubeLink>this.track.links
+			.map(urlStr => this.linkParser.parse(urlStr))
+			.find(link => link instanceof YoutubeLink);
+	}
 
-  private splitLinks(text: string) {
-    return text.split(/[\n\t ]/g).map(link => link.trim()).filter(link => link && link.length > 0);
-  }
+	private splitLinks(text: string) {
+		return text.split(/[\n\t ]/g).map(link => link.trim()).filter(link => link && link.length > 0);
+	}
 
-  private joinLinks(links: string[]) {
-    return links.join('\n');
-  }
+	private joinLinks(links: string[]) {
+		return links.join('\n');
+	}
 }

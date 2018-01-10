@@ -15,12 +15,12 @@
 					<option *ngFor="let filterDefinition of filterDefinitionsAsArray" [value]="filterDefinition.type">{{ filterDefinition.typeText }}</option>
 				</select>
 
-        <fieldset *ngIf="selectedFilter.type === filterDefinitions.interprets.type">
-          <select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
-            <option *ngFor="let operator of selectedFilter.operatorsAsArray" [value]="operator.value">{{ operator.text }}</option>
-          </select>
-          <app-text-input [value]="selectedFilter.value" (input)="onValueChanged($event)" [suggestionProvider]="interpretSuggestionProvider"></app-text-input>
-        </fieldset>
+				<fieldset *ngIf="selectedFilter.type === filterDefinitions.interprets.type">
+					<select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
+						<option *ngFor="let operator of selectedFilter.operatorsAsArray" [value]="operator.value">{{ operator.text }}</option>
+					</select>
+					<app-text-input [value]="selectedFilter.value" (input)="onValueChanged($event)" [suggestionProvider]="interpretSuggestionProvider"></app-text-input>
+				</fieldset>
 
 				<fieldset *ngIf="selectedFilter.type === filterDefinitions.genres.type">
 					<select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
@@ -40,7 +40,7 @@
 					<select [value]="selectedFilter.operator" (change)="onOperatorChanged($event.target.value)">
 						<option *ngFor="let operator of selectedFilter.operatorsAsArray" [value]="operator.value">{{ operator.text }}</option>
 					</select>
-				  <app-text-input [value]="selectedFilter.value" (input)="onValueChanged($event)" [suggestionProvider]="tagTypeSuggetionProvider"></app-text-input>
+					<app-text-input [value]="selectedFilter.value" (input)="onValueChanged($event)" [suggestionProvider]="tagTypeSuggestionProvider"></app-text-input>
 				</fieldset>
 			</div>
 		</div>
