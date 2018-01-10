@@ -1,7 +1,1 @@
-<div class="spinner clearfix">
-	<div class="rect1"><div></div></div>
-	<div class="rect2"><div></div></div>
-	<div class="rect3"><div></div></div>
-	<div class="rect4"><div></div></div>
-	<div class="rect5"><div></div></div>
-</div>
+<div *ngFor="let i of [1, 2, 3, 4, 5]" class="rect rect-{{i}}"><div></div></div>
