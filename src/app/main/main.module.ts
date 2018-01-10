@@ -28,6 +28,7 @@ import { YoutubePlayerContext } from './components/youtube-player/youtube-player
 import { Page } from './page';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { YoutubeVideoTitleInterpreter } from './services/youtube-video-title-interpreter';
+import { LoadingIndicator } from './components/loading-indicator/loading-indicator';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { YoutubeVideoTitleInterpreter } from './services/youtube-video-title-int
     TrackList,
     TrackDetails,
     YoutubePlayer,
-    YoutubePlayerContext
+    YoutubePlayerContext,
+    LoadingIndicator
   ],
   imports: [
     BrowserModule,

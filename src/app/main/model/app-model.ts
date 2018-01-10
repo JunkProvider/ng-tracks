@@ -120,6 +120,14 @@ export class AppModel {
         this.selectedFilterChangedEvent.trigger(this, null);
     }
 
+    setPageSize(pageSize: number) {
+      if (pageSize === this._pageSize) {
+        return;
+      }
+      this._pageSize = pageSize;
+      this.loadTracks();
+    }
+
     nextPage() {
       if (this.pageIndex === this.pageCount - 1) {
         return;

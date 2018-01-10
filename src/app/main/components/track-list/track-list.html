@@ -6,10 +6,10 @@
     <span class="debug-item" *ngIf="loading">loading</span>
     <span class="debug-item"><button (click)="reload()">reload</button></span>
   </div>
-  <ul class="body clearfix">
+  <ul [id]="listElementId" class="body clearfix">
     <li
-      *ngFor="let track of tracks"
-      [ngClass]="{ 'selected': selectedTrack.id === track.id }"
+      *ngFor="let track of tracks; let i = index"
+      [ngClass]="{ 'selected': track && selectedTrack.id === track.id, 'closing': i === pageSize - 1 }"
       [ngStyle]="{ 'height': (100 / pageSize).toFixed(2) + '%' }"
       (click)="select(track)"
     >
@@ -35,5 +35,7 @@
       </dl>
     </li>
   </ul>
-  <div *ngIf="loading" class="loading-mask"></div>
+  <div *ngIf="loading" class="loading-mask">
+    <app-loading-indicator></app-loading-indicator>
+  </div>
 </div>

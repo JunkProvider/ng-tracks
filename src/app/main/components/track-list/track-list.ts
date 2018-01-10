@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Track } from './../../model/track';
 import { AppModel } from '../../model/app-model';
+import { Interval } from '@junkprovider/common';
 
 @Component({
   selector: 'app-track-list',
@@ -8,6 +9,9 @@ import { AppModel } from '../../model/app-model';
   styleUrls: ['./track-list.css']
 })
 export class TrackList implements OnInit {
+  private static nextInstanceIndex = 0;
+
+  listElementId: string;
   tracks: Track[] = [];
   selectedTrack: Track = null;
   pageSize: number = null;
@@ -15,7 +19,11 @@ export class TrackList implements OnInit {
   pageCount = 1;
   loading = false;
 
-  constructor(private readonly model: AppModel) { }
+  private readonly sizeCheckingInterval = new Interval(500);
+
+  constructor(private readonly model: AppModel) {
+    this.listElementId = 'track-list-' + TrackList.nextInstanceIndex++;
+  }
 
   ngOnInit() {
     this.model.tracksChangedEvent.add(this, this.updateTracks);
@@ -33,10 +41,17 @@ export class TrackList implements OnInit {
     document.addEventListener('mousewheel', (event: any) => this.scroll(event.wheelData));
     document.addEventListener('DOMMouseScroll', (event: any) => this.scroll(event.detail));
 
+    this.sizeCheckingInterval.tickEvent.add(this, this.checkSize);
+    this.sizeCheckingInterval.start();
+
+    this.checkSize();
     this.model.loadTracks();
   }
 
   select(track: Track) {
+    if (this.model.selectedTrack && track.id === this.model.selectedTrack.id) {
+      return;
+    }
     this.model.selectTrack(track);
   }
 
@@ -50,6 +65,20 @@ export class TrackList implements OnInit {
 
   reload() {
     this.model.loadTracks();
+  }
+
+  private checkSize() {
+    const domElement = document.getElementById(this.listElementId);
+
+    if (!domElement) {
+      return;
+    }
+
+    const minItemHeight = 60;
+    const height = domElement.clientHeight;
+    const maxItemCount = Math.floor(height / minItemHeight);
+
+    this.model.setPageSize(maxItemCount);
   }
 
   private updateTracks() {
