@@ -19,7 +19,7 @@
     </span>
   </div>
   <div class="body">
-    <div class="definition-list">
+    <div *ngIf="editing" class="definition-list">
       <label>
         <span>Interpret</span>
         <app-text-input
@@ -56,7 +56,7 @@
         (input)="onLinksChanged($event)"
       ></app-text-input>
     </label>
-    <label class="tags">
+    <label *ngIf="editing" class="tags">
       <span>Tags</span>
       <ul class="tag-list">
         <li class="clearfix" *ngFor="let tag of track.tags; let i = index">
