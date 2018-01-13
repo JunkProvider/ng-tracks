@@ -8,9 +8,5 @@
     - A single sort criterion should be offered.
     - Available Criteria are 'Title', 'Rating' and 'Interpret'.
 
-- Search
-    - A search field should be offered.
-    - The search text applies to 'Title' and 'Interpret'.
-
 - Confirm Delete
     - A Confirmation Dialog must be displayed when the User clicks the 'Delete' Button.

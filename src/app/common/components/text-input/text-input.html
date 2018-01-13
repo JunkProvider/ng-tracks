@@ -8,6 +8,7 @@
 		[disabled]="disabled"
 		[value]="value"
 	>
+  <button class="clear-button" [disabled]="disabled || readonly" (click)="clear()">X</button>
 	<div class="suggestions" [ngClass]="{ 'displayed': suggestionsDisplayed && suggestions.length > 0 }">
 		<div
 			*ngFor="let suggestion of suggestions; let i = index"

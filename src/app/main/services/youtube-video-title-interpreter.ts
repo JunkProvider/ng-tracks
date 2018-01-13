@@ -10,7 +10,7 @@ export class YoutubeVideoTitleInterpreter {
 	interpret(text: string): YoutubeVideoTitleInterpreterResult {
 		const parts = text.split('-')
 			.map(part => part.trim())
-			.filter(part => part.length > 0 && isNaN(parseInt(part, 10)));
+			.filter(part => part.length > 0);
 
 		const result: YoutubeVideoTitleInterpreterResult = {
 			title: null,

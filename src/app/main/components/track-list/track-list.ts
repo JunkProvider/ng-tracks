@@ -14,6 +14,7 @@ export class TrackList implements OnInit {
 	listElementId: string;
 	tracks: Track[] = [];
 	selectedTrack: Track = null;
+	searchText = '';
 	pageSize: number = null;
 	pageIndex = 0;
 	pageCount = 1;
@@ -38,6 +39,9 @@ export class TrackList implements OnInit {
 		this.model.loadingChangedEvent.add(this, this.updateLoading);
 		this.updateLoading();
 
+		this.model.searchTextChangedEvent.add(this, this.updateSearchText);
+		this.updateSearchText();
+
 		document.addEventListener('mousewheel', (event: any) => this.scroll(event.wheelData));
 		document.addEventListener('DOMMouseScroll', (event: any) => this.scroll(event.detail));
 
@@ -47,6 +51,16 @@ export class TrackList implements OnInit {
 		this.checkSize();
 		this.model.loadTracks();
 	}
+
+	onSearchTextInputInput(value: string) {
+	  this.searchText = value;
+  }
+
+  onSearchTextInputKeyDown(event: KeyboardEvent) {
+	  if (event.keyCode === 13) {
+      this.search();
+    }
+  }
 
 	select(track: Track) {
 		if (this.model.selectedTrack && track.id === this.model.selectedTrack.id) {
@@ -66,6 +80,10 @@ export class TrackList implements OnInit {
 	reload() {
 		this.model.loadTracks();
 	}
+
+	search() {
+	  this.model.setSearchTest(this.searchText);
+  }
 
 	private checkSize() {
 		const domElement = document.getElementById(this.listElementId);
@@ -87,6 +105,10 @@ export class TrackList implements OnInit {
 
 	private updateSelectedTrack() {
 		this.selectedTrack = this.model.selectedTrack;
+	}
+
+	private updateSearchText() {
+		this.searchText = this.model.searchText;
 	}
 
 	private updatePagination() {

@@ -15,7 +15,8 @@ interface Word {
 	styleUrls: ['./text-input.css']
 })
 export class TextInput implements OnInit {
-	@Output() input = new EventEmitter<string>();
+	@Output() readonly input = new EventEmitter<string>();
+  @Output() readonly cleared = new EventEmitter<string>();
 
 	@Input() value: string = null;
 	@Input() disabled = false;
@@ -102,6 +103,12 @@ export class TextInput implements OnInit {
 		this.hideSuggestions();
 		this.input.next(this.value);
 	}
+
+	clear() {
+	  this.value = '';
+	  this.input.next(this.value);
+	  this.cleared.next(this.value);
+  }
 
 	private updateSuggestions(lastWord: Word) {
 		return this.suggestionProvider.provide(lastWord ? lastWord.text : '').then(suggestions => {
