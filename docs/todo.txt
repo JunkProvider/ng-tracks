@@ -7,6 +7,3 @@
 - Sorting
     - A single sort criterion should be offered.
     - Available Criteria are 'Title', 'Rating' and 'Interpret'.
-
-- Confirm Delete
-    - A Confirmation Dialog must be displayed when the User clicks the 'Delete' Button.
