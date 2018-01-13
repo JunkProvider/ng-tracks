@@ -1,4 +1,4 @@
-<div *ngIf="track" ngClass="{ 'edit-mode': editing }">
+<div *ngIf="track" class="track-details" ngClass="{ 'edit-mode': editing }">
 	<div class="head">
 		<input
 			type="text"
@@ -84,10 +84,22 @@
 		</label>
 	</div>
 	<div class="buttons clearfix">
-			<button class="delete" *ngIf="!editing" [disabled]="!track.id" (click)="delete()">Delete</button>
-			<button class="new" *ngIf="!editing" (click)="new()">New</button>
-			<button class="edit" *ngIf="!editing" (click)="edit()">Edit</button>
-			<button class="save" *ngIf="editing" [disabled]="!changed || !valid" (click)="save()">Save</button>
-			<button class="discard" *ngIf="editing && track.id" (click)="discard()">Cancel</button>
+			<button
+        class="text-button decent delete"
+        *ngIf="!editing"
+        [disabled]="!track.id || deleteStatus === DeleteStatus.Pending"
+        (click)="delete()"
+      >
+        <span *ngIf="deleteStatus === DeleteStatus.Delete">Delete</span>
+        <app-loading-indicator  *ngIf="deleteStatus === DeleteStatus.Pending"></app-loading-indicator>
+        <span *ngIf="deleteStatus === DeleteStatus.Confirm || deleteStatus === DeleteStatus.Deleting">Confirm Delete</span>
+      </button>
+			<button class="text-button decent new" *ngIf="!editing" (click)="new()">New</button>
+			<button class="text-button decent edit" *ngIf="!editing" (click)="edit()">Edit</button>
+			<button class="text-button decent save" *ngIf="editing" [disabled]="!changed || !valid" (click)="save()">Save</button>
+			<button class="text-button decent discard" *ngIf="editing && track.id" (click)="discard()">Cancel</button>
 	</div>
+  <app-loading-mask *ngIf="deleteStatus === DeleteStatus.Deleting">
+    <app-loading-indicator></app-loading-indicator>
+  </app-loading-mask>
 </div>

@@ -1,4 +1,5 @@
 .sections {
+  position: relative;
 		width: 100%;
 		height: 100%;
 		border: 1px solid #303030;
@@ -16,4 +17,27 @@
 
 .sections > *:last-child {
 		height: calc(100% - 150px);
+}
+
+.dialogs {
+
+}
+
+.dialogs > * {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #303030;
+  background-color: #202020;
+}
+
+.dialogs .error-dialog {
+  width: 400px;
+  height: 200px;
+}
+
+.dialogs .test-dialog {
+  width: 400px;
+  height: 200px;
 }

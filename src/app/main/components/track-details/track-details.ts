@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { EMPTY_TRACK } from '../../model/track';
 import { AppModel } from '../../model/app-model';
 import { SaveTrackService } from '../../services/save-track-service';
@@ -12,6 +12,7 @@ import { RateTrackService } from '../../services/rate-track-service';
 import { YoutubeLink } from '../../model/youtube-link';
 import { YoutubeVideoData } from '../youtube-player/youtube-vido-data';
 import { YoutubeVideoTitleInterpreter } from '../../services/youtube-video-title-interpreter';
+import { Timeout } from '@junkprovider/common';
 export interface TagState {
 	name: string;
 	value: string;
@@ -28,13 +29,19 @@ export interface TrackState {
 	rating: number;
 }
 
+export enum DeleteStatus {
+	Delete, Pending, Confirm, Deleting
+}
+
 @Component({
 	selector: 'app-track-details',
 	templateUrl: './track-details.html',
 	styleUrls: ['./track-details.css']
 })
 export class TrackDetails implements OnInit {
+	readonly DeleteStatus = DeleteStatus;
 
+	readonly newClicked = new EventEmitter<void>();
 
 	ratingOptions = [
 		{ description: 'Not my Taste.' },
@@ -43,12 +50,17 @@ export class TrackDetails implements OnInit {
 		{ description: 'Blin this is good.' },
 		{ description: 'Awesome. One of my Favourites!' }
 	];
+
 	unchangedTrack: TrackState = null;
 	track: TrackState = null;
 	editing = false;
 	changed = false;
 	valid = true;
 	youtubeLink: YoutubeLink = null;
+	deleteStatus = DeleteStatus.Delete;
+
+	private readonly deleteConfirmTimer = new Timeout(2000);
+	private readonly deleteCancelTimer = new Timeout(5000);
 
 	constructor(
 		private readonly sanitizer: DomSanitizer,
@@ -61,7 +73,10 @@ export class TrackDetails implements OnInit {
 		private readonly genreSuggestionProvider: GenreSuggestionProvider,
 		private readonly tagTypeSuggestionProvider: TagTypeSuggestionProvider,
 		private readonly model: AppModel
-	) {}
+	) {
+		this.deleteConfirmTimer.expiredEvent.add(this, this.enableDeleteConfirmation);
+		this.deleteCancelTimer.expiredEvent.add(this, this.cancelDelete);
+	}
 
 	ngOnInit() {
 		this.model.selectedTrackChangedEvent.add(this, this.update);
@@ -199,7 +214,33 @@ export class TrackDetails implements OnInit {
 	}
 
 	delete() {
-		this.deleteTrackService.deleteTrack(this.track.id).then(() => this.model.loadTracks());
+		this.stopDeleteTimers();
+		if (this.deleteStatus === DeleteStatus.Confirm) {
+      this.deleteStatus = DeleteStatus.Deleting;
+		  this.deleteTrackService.deleteTrack(this.track.id).then(() => {
+				this.model.loadTracks();
+				this.model.selectTrack(EMPTY_TRACK);
+			});
+		} else {
+			this.deleteStatus = DeleteStatus.Pending;
+			this.deleteConfirmTimer.start();
+		}
+	}
+
+	enableDeleteConfirmation() {
+		this.stopDeleteTimers();
+		this.deleteStatus = DeleteStatus.Confirm;
+		this.deleteCancelTimer.start();
+	}
+
+	cancelDelete() {
+		this.stopDeleteTimers();
+		this.deleteStatus = DeleteStatus.Delete;
+	}
+
+	private stopDeleteTimers() {
+		this.deleteConfirmTimer.stop();
+		this.deleteCancelTimer.stop();
 	}
 
 	rate(rating: number) {
@@ -227,9 +268,14 @@ export class TrackDetails implements OnInit {
 		this.unchangedTrack = Object.assign({}, this.track);
 		this.changed = false;
 		this.editing = !this.track.id;
+		this.deleteStatus = DeleteStatus.Delete;
 
 		this.updateEmbedLink();
 		this.updateTags();
+
+		if (this.track.id == null) {
+			this.newClicked.next();
+		}
 	}
 
 	private updateEmbedLink() {

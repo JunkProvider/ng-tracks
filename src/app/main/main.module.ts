@@ -29,6 +29,7 @@ import { Page } from './page';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { YoutubeVideoTitleInterpreter } from './services/youtube-video-title-interpreter';
 import { LoadingIndicator } from '../common/components/loading-indicator/loading-indicator';
+import { FocusDirective } from './directives/focus-directive';
 
 @NgModule({
 	declarations: [
@@ -40,7 +41,7 @@ import { LoadingIndicator } from '../common/components/loading-indicator/loading
 		TrackDetails,
 		YoutubePlayer,
 		YoutubePlayerContext,
-		LoadingIndicator
+    FocusDirective
 	],
 	imports: [
 		BrowserModule,

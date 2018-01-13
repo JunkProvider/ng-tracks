@@ -8,7 +8,6 @@ body {
     margin: 0;
     padding: 20px;
     overflow: hidden;
-    /*background-color: #202020;*/
     background-color: #080808;
     font-family: Consolas, 'Courier New', monospace;
     font-size: 12px;
@@ -75,4 +74,54 @@ textarea:not(:read-only) {
     display: block;
     visibility: hidden;
     height: 0;
+}
+
+button.text-button {
+  display: block;
+  min-width: 80px;
+  height: 28px;
+  padding: 0 8px 4px 8px;
+  border: none;
+  text-align: center;
+  background-color: #c0c0c0;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+button.text-button:hover:not(:disabled) {
+  background-color: #ffffff;
+}
+
+button.text-button:disabled {
+  background-color: #303030;
+  color: #909090;
+  pointer-events: none;
+}
+
+button.text-button.decent {
+  border: 1px solid #c0c0c0;
+  background-color: inherit;
+  color: #c0c0c0;
+}
+
+button.text-button.decent:hover:not(:disabled) {
+  border-color: #c0c0c0;
+  background-color: inherit;
+  color: #ffffff;
+}
+
+button.text-button.decent:disabled {
+  border-color: #404040;
+  background-color: inherit;
+  color: #404040;
+}
+
+app-loading-mask > app-loading-indicator {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
 }

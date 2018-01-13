@@ -17,7 +17,7 @@ export class AppModel {
 	readonly paginationChangedEvent = new Event<void>();
 	readonly loadingChangedEvent = new Event<void>();
 
-	private loadTracksDelay = new Timeout(2000);
+	private loadTracksDelay = new Timeout(600);
 	private _tracks: Track[] = [];
 	private _selectedTrack = EMPTY_TRACK;
 	private _filters: Filter[] = [];
@@ -187,7 +187,7 @@ export class AppModel {
 
 	private onFiltersChanged() {
 		this.saveFilters();
-		// this._pageIndex = 0;
+    this.loadTracksAfterDelay();
 		this.paginationChangedEvent.trigger(this, null);
 	}
 

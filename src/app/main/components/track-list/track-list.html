@@ -15,7 +15,7 @@
       ></app-text-input>
     </span>
 		<span class="debug-item">
-      <button (click)="reload()">reload</button>
+      <button class="text-button decent" (click)="reload()">reload</button>
     </span>
 	</div>
 	<ul [id]="listElementId" class="body clearfix">
@@ -47,7 +47,7 @@
 			</dl>
 		</li>
 	</ul>
-	<div *ngIf="loading" class="loading-mask">
-		<app-loading-indicator></app-loading-indicator>
-	</div>
+  <app-loading-mask *ngIf="loading">
+    <app-loading-indicator></app-loading-indicator>
+  </app-loading-mask>
 </div>

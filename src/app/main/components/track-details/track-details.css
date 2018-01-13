@@ -1,10 +1,15 @@
-:host > div {
+.track-details {
 		display: flex;
 		flex-direction: column;
 		position: relative;
 		width: 600px;
 		height: 100%;
 		padding: 10px;
+}
+
+.track-details > app-loading-indicator {
+  position: absolute;
+  left: 0;
 }
 
 .head {
@@ -141,52 +146,24 @@ app-text-input {
 		height: 28px;
 }
 
-.buttons > button {
-		display: block;
-		float: left;
-		height: 100%;
-		min-width: 80px;
-		padding: 0 8px 4px 8px;
-		border: none;
-		text-align: center;
-		color: inherit;
-		cursor: pointer;
-		font-weight: bold;
-		transition: background-color 0.3s;
-}
-
-.buttons > button:disabled {
-		background-color: #303030;
-		color: #909090;
-		pointer-events: none;
-}
-
-.buttons > .save, .buttons > .new, .buttons > .edit {
+.buttons .save, .buttons .new, .buttons .edit {
 		float: right;
 		margin-left: 10px;
-		background-color: #d0d0d0;
-		color: black;
 }
 
-.buttons > .save:hover, .buttons > .new:hover, .buttons > .edit:hover {
-		background-color: #ffffff;
-}
-
-.buttons > .discard {
+.buttons .discard {
 		float: right;
-		background-color: #b0b0b0;
-		color: black;
 }
 
-.buttons > .discard:hover {
-		background-color: #ffffff;
+.buttons .delete {
+  position: relative;
+  float: left;
 }
 
-.buttons > .delete {
-		background-color: #b0b0b0;
-		color: black;
-}
-
-.buttons > .delete:hover {
-		background-color: #ffffff;
+.buttons .delete app-loading-indicator {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
