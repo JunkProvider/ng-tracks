@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Track } from '../../model/track';
-import { AppModel } from '../../model/app-model';
+import { AppModel, TrackSortCriterion, TrackSortDirection } from '../../model/app-model';
 import { Interval } from '@junkprovider/common';
 
 @Component({
@@ -11,10 +11,15 @@ import { Interval } from '@junkprovider/common';
 export class TrackList implements OnInit {
 	private static nextInstanceIndex = 0;
 
+	readonly TrackSortCriterion = TrackSortCriterion;
+  readonly TrackSortDirection = TrackSortDirection;
+
 	listElementId: string;
 	tracks: Track[] = [];
 	selectedTrack: Track = null;
 	searchText = '';
+	sortCriterion = TrackSortCriterion.Title;
+	sortDirection = TrackSortDirection.Asc;
 	pageSize: number = null;
 	pageIndex = 0;
 	pageCount = 1;
@@ -41,6 +46,9 @@ export class TrackList implements OnInit {
 
 		this.model.searchTextChangedEvent.add(this, this.updateSearchText);
 		this.updateSearchText();
+
+    this.model.sortingChangedEvent.add(this, this.updateSorting);
+    this.updateSorting();
 
 		document.addEventListener('mousewheel', (event: any) => this.scroll(event.wheelData));
 		document.addEventListener('DOMMouseScroll', (event: any) => this.scroll(event.detail));
@@ -85,6 +93,14 @@ export class TrackList implements OnInit {
 	  this.model.setSearchTest(this.searchText);
   }
 
+  changeSortCriterion(sortCriterion: TrackSortCriterion) {
+	  this.model.setSortCriterion(sortCriterion);
+  }
+
+  changeSortDirection(sortDirection: TrackSortDirection) {
+    this.model.setSortDirection(sortDirection);
+  }
+
 	private checkSize() {
 		const domElement = document.getElementById(this.listElementId);
 
@@ -111,7 +127,12 @@ export class TrackList implements OnInit {
 		this.searchText = this.model.searchText;
 	}
 
-	private updatePagination() {
+  private updateSorting() {
+    this.sortCriterion = this.model.sortCriterion;
+    this.sortDirection = this.model.sortDirection;
+  }
+
+  private updatePagination() {
 		this.pageSize = this.model.pageSize;
 		this.pageIndex = this.model.pageIndex;
 		this.pageCount = this.model.pageCount;

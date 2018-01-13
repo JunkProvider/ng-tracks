@@ -14,7 +14,19 @@
         (keydown)="onSearchTextInputKeyDown($event)"
       ></app-text-input>
     </span>
-		<span class="debug-item">
+    <span class="debug-item">
+      <select (change)="changeSortCriterion($event.target.value)">
+        <option [value]="TrackSortCriterion.Title">Title</option>
+        <option [value]="TrackSortCriterion.Rating">Rating</option>
+      </select>
+    </span>
+    <span class="debug-item">
+      <select (change)="changeSortDirection($event.target.value)">
+        <option [value]="TrackSortDirection.Asc">ASC</option>
+        <option [value]="TrackSortDirection.Desc">DESC</option>
+      </select>
+    </span>
+    <span class="debug-item">
       <button class="text-button decent" (click)="reload()">reload</button>
     </span>
 	</div>
@@ -46,8 +58,8 @@
 				</dd>
 			</dl>
 		</li>
+    <app-loading-mask *ngIf="loading">
+      <app-loading-indicator></app-loading-indicator>
+    </app-loading-mask>
 	</ul>
-  <app-loading-mask *ngIf="loading">
-    <app-loading-indicator></app-loading-indicator>
-  </app-loading-mask>
 </div>

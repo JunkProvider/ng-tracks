@@ -3,7 +3,3 @@
 - Error Handling
     - A Popup/Dialog should be displayed when an fatal error occured. A 'Restart Application' Button should be available.
     - A Popup/Dialog should be displayed when an expected domain error (entity does not exist anymore) occures.
-
-- Sorting
-    - A single sort criterion should be offered.
-    - Available Criteria are 'Title', 'Rating' and 'Interpret'.

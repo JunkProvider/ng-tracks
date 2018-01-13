@@ -7,6 +7,9 @@ import { CookieService } from 'angular2-cookie/core';
 import { filterDefinitions } from './filter-definitions';
 import { PagedQueryResult } from '../providers/paged-query-result';
 
+export enum TrackSortCriterion { Title = 'TITLE', Rating = 'RATING' }
+export enum TrackSortDirection { Asc = 'ASC', Desc = 'DESC' }
+
 @Injectable()
 export class AppModel {
 	readonly tracksChangedEvent = new Event<void>();
@@ -14,6 +17,7 @@ export class AppModel {
 	readonly filtersChangedEvent = new Event<void>();
 	readonly selectedFilterChangedEvent = new Event<void>();
 	readonly searchTextChangedEvent = new Event<void>();
+	readonly sortingChangedEvent = new Event<void>();
 	readonly paginationChangedEvent = new Event<void>();
 	readonly loadingChangedEvent = new Event<void>();
 
@@ -23,6 +27,8 @@ export class AppModel {
 	private _filters: Filter[] = [];
 	private _selectedFilter: Filter = null;
 	private _searchText = '';
+	private _sortCriterion = TrackSortCriterion.Title;
+	private _sortDirection = TrackSortDirection.Asc;
 	private _pageSize = 10;
 	private _pageIndex = 0;
 	private _totalCount = 0;
@@ -47,6 +53,14 @@ export class AppModel {
 
 	get searchText() {
 		return this._searchText;
+	}
+
+	get sortCriterion() {
+		return this._sortCriterion;
+	}
+
+	get sortDirection() {
+		return this._sortDirection;
 	}
 
 	get pageSize() {
@@ -86,7 +100,12 @@ export class AppModel {
 		this.loadTracksDelay.stop();
 
 		const filters = this.filters.map(filter => filter.getData());
-		const promise = this.trackProvider.getBy(filters, this.searchText, this.pageIndex * this.pageSize, this.pageSize).then(result => {
+		const promise = this.trackProvider.getBy(
+			filters,
+			this.searchText,
+			this.sortCriterion, this.sortDirection,
+			this.pageIndex * this.pageSize, this.pageSize
+		).then(result => {
 			this.onTracksLoaded(result);
 			return null;
 		});
@@ -159,6 +178,18 @@ export class AppModel {
 		this.searchTextChangedEvent.trigger(this, null);
 	}
 
+	setSortCriterion(sortCriterion: TrackSortCriterion) {
+		this._sortCriterion = sortCriterion;
+		this.loadTracksAfterDelay();
+		this.sortingChangedEvent.trigger(this, null);
+	}
+
+	setSortDirection(sortDirection: TrackSortDirection) {
+		this._sortDirection = sortDirection;
+		this.loadTracksAfterDelay();
+		this.sortingChangedEvent.trigger(this, null);
+	}
+
 	setPageSize(pageSize: number) {
 		if (pageSize === this._pageSize) {
 			return;
@@ -187,7 +218,7 @@ export class AppModel {
 
 	private onFiltersChanged() {
 		this.saveFilters();
-    this.loadTracksAfterDelay();
+		this.loadTracksAfterDelay();
 		this.paginationChangedEvent.trigger(this, null);
 	}
 

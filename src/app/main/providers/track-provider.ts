@@ -12,10 +12,12 @@ import { PagedQueryResult } from './paged-query-result';
 export class TrackProvider {
 	constructor(private readonly httpClient: HttpClient, private readonly trackDeserializer: TrackDeserializer) {}
 
-	getBy(filters: FilterData<any>[], search: string, offset: number, limit: number): Promise<PagedQueryResult<Track>> {
+	getBy(filters: FilterData<any>[], search: string, sortCriterion: string, sortDirection: string, offset: number, limit: number): Promise<PagedQueryResult<Track>> {
 		const params = new HttpParams()
 			.set('filters', JSON.stringify(filters))
-      .set('search', search)
+			.set('search', search)
+			.set('sortCriterion', sortCriterion)
+			.set('sortDirection', sortDirection)
 			.set('offset', String(offset))
 			.set('limit', String(limit));
 		return this.httpClient.get<any>(appConfig.api + '/track', { params: params }).pipe(
