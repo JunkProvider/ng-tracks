@@ -15,13 +15,14 @@
       ></app-text-input>
     </span>
     <span class="debug-item">
-      <select (change)="changeSortCriterion($event.target.value)">
-        <option [value]="TrackSortCriterion.Title">Title</option>
+      <select [value]="sortCriterion" (change)="changeSortCriterion($event.target.value)">
         <option [value]="TrackSortCriterion.Rating">Rating</option>
+        <option [value]="TrackSortCriterion.Title">Title</option>
+        <option [value]="TrackSortCriterion.Interpret">Interpret</option>
       </select>
     </span>
     <span class="debug-item">
-      <select (change)="changeSortDirection($event.target.value)">
+      <select [value]="sortDirection" (change)="changeSortDirection($event.target.value)">
         <option [value]="TrackSortDirection.Asc">ASC</option>
         <option [value]="TrackSortDirection.Desc">DESC</option>
       </select>

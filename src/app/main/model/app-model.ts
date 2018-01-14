@@ -7,7 +7,7 @@ import { CookieService } from 'angular2-cookie/core';
 import { filterDefinitions } from './filter-definitions';
 import { PagedQueryResult } from '../providers/paged-query-result';
 
-export enum TrackSortCriterion { Title = 'TITLE', Rating = 'RATING' }
+export enum TrackSortCriterion { Title = 'TITLE', Rating = 'RATING', Interpret = 'INTERPRET' }
 export enum TrackSortDirection { Asc = 'ASC', Desc = 'DESC' }
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AppModel {
 	private _filters: Filter[] = [];
 	private _selectedFilter: Filter = null;
 	private _searchText = '';
-	private _sortCriterion = TrackSortCriterion.Title;
+	private _sortCriterion = TrackSortCriterion.Interpret;
 	private _sortDirection = TrackSortDirection.Asc;
 	private _pageSize = 10;
 	private _pageIndex = 0;
