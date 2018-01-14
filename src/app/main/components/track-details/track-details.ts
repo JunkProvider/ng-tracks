@@ -113,7 +113,7 @@ export class TrackDetails implements OnInit {
 		for (let i = 0; i < tags.length;) {
 			const tag = tags[i];
 			const tagFocused = i === focused;
-			const tagEmpty = tag.name.length === 0 && tag.value.length === 0;
+			const tagEmpty = tag.name.length === 0;
 			if (!tagFocused && tagEmpty) {
 				tags.splice(i, 1);
 				if (focused > i) {
@@ -126,7 +126,7 @@ export class TrackDetails implements OnInit {
 		const focusedTag = tags[focused];
 		const lastFocusedAndEmpty = focusedTag && (focusedTag.name.length === 0 && focusedTag.value.length === 0) && focused === tags.length - 1;
 		if (!lastFocusedAndEmpty && this.editing) {
-			tags.push({ name: '', value: '' });
+			tags.push({ name: '', value: '1' });
 		}
 		this.onChangedByUser();
 	}
@@ -263,7 +263,7 @@ export class TrackDetails implements OnInit {
 			joinedLinks: this.joinLinks(track.links.map(link => link.url)),
 			rating: track.rating
 		};
-		this.track.tags.push({ name: '', value: '' });
+		this.track.tags.push({ name: '', value: '1' });
 
 		this.unchangedTrack = Object.assign({}, this.track);
 		this.changed = false;
