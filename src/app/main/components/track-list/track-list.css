@@ -70,27 +70,10 @@ li .rating > i.active {
 	border-color: #ffffff;
 }
 
-li dl {
-	display: grid;
-	grid-template-columns: 124px 1fr;
+.interpret:not(:last-child):after {
+  content: " ft. ";
 }
 
-li dt {
-	margin: 0;
-}
-
-li dt:after {
-	content: ":";
-}
-
-li dd {
-	margin: 0;
-}
-
-li .interpret:not(:last-child):after, .genre:not(:last-child):after {
-	content: ", ";
-}
-
-app-loading-mask app-loading-indicator {
-
+.genre:not(:last-child):after, .tag:not(:last-child):after {
+ 	content: ", ";
 }
