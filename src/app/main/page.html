@@ -1,9 +1,17 @@
 <div class="sections">
-		<div>
-				<app-filter-section></app-filter-section>
-		</div>
-		<div>
-				<app-track-list></app-track-list>
-				<app-track-details></app-track-details>
-		</div>
+  <div>
+    <app-filter-section></app-filter-section>
+  </div>
+  <div>
+    <app-track-list></app-track-list>
+    <app-track-details></app-track-details>
+  </div>
+</div>
+<div class="dialogs">
+  <div class="error-dialog" *ngIf="error">
+    <span>{{ error }}</span>
+  </div>
+  <div class="test-dialog" *ngIf="test">
+    <span>{{ test }}</span>
+  </div>
 </div>

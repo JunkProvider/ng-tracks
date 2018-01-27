@@ -104,7 +104,7 @@ export class AppModel {
 			filters,
 			this.searchText,
 			this.sortCriterion, this.sortDirection,
-			this.pageIndex * this.pageSize, this.pageSize
+			this.pageIndex, this.pageSize
 		).then(result => {
 			this.onTracksLoaded(result);
 			return null;
