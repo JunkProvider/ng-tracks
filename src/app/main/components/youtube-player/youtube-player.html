@@ -1,6 +1,6 @@
 <ng-container *ngFor="let localVideoId of [videoId]">
-	<app-youtube-player-context
-		[videoId]="localVideoId"
-		(videoLoaded)="videoLoaded.next($event)"
-	></app-youtube-player-context>
+  <app-youtube-player-context
+    [videoId]="localVideoId"
+    (videoLoaded)="videoLoaded.next($event)"
+  ></app-youtube-player-context>
 </ng-container>

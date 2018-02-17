@@ -1,73 +1,73 @@
 :host > div {
-	position: relative;
-	float: left;
-	width: calc(100% - 600px);
-	height: 100%;
-	border-right: 1px solid #303030;
+  position: relative;
+  float: left;
+  width: calc(100% - 600px);
+  height: 100%;
+  border-right: 1px solid #303030;
 }
 
 :host > div > .head {
-	height: 40px;
-	padding: 5px;
-	border-bottom: 1px solid #404040;
+  height: 40px;
+  padding: 5px;
+  border-bottom: 1px solid #404040;
 }
 
 :host > div > .head .debug-item {
-	display: inline-block;
-	margin: 0 20px 20px 0;
+  display: inline-block;
+  margin: 0 20px 20px 0;
 }
 
 ul {
   position: relative;
-	width: 100%;
-	height: calc(100% - 40px);
-	overflow: hidden;
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow: hidden;
 }
 
 li {
-	width: 100%;
-	padding: 5px;
-	cursor: pointer;
-	overflow: hidden;
+  width: 100%;
+  padding: 5px;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 li:not(.closing) {
-	border-bottom: 1px solid #404040;
+  border-bottom: 1px solid #404040;
 }
 
 li:hover {
-	background-color: #202020;
+  background-color: #202020;
 }
 
 li.selected {
-	background-color: #303030;
-	cursor: default;
+  background-color: #303030;
+  cursor: default;
 }
 
 li .head {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 li .title {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 li .rating {
-	float: right;
+  float: right;
 }
 
 li .rating > i {
-	display: inline-block;
-	width: 8px;
-	height: 8px;
-	border: 1px solid #404040;
-	border-radius: 100%;
-	user-select: none;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #404040;
+  border-radius: 100%;
+  user-select: none;
 }
 
 li .rating > i.active {
-	background-color: #ffffff;
-	border-color: #ffffff;
+  background-color: #ffffff;
+  border-color: #ffffff;
 }
 
 .interpret:not(:last-child):after {
@@ -75,5 +75,5 @@ li .rating > i.active {
 }
 
 .genre:not(:last-child):after, .tag:not(:last-child):after {
- 	content: ", ";
+   content: ", ";
 }

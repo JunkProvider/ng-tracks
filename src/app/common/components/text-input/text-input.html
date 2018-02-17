@@ -1,21 +1,21 @@
 <div>
-	<input
-		(input)="$event.stopPropagation(); onInput($event.target.value)"
-		(blur)="onBlur()"
-		(keydown)="onKeyDown($event)"
-		[placeholder]="placeholder"
-		[readonly]="readonly"
-		[disabled]="disabled"
-		[value]="value"
-	>
+  <input
+    (input)="$event.stopPropagation(); onInput($event.target.value)"
+    (blur)="onBlur()"
+    (keydown)="onKeyDown($event)"
+    [placeholder]="placeholder"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    [value]="value"
+  >
   <button class="clear-button" tabindex="-1" [disabled]="disabled || readonly" (click)="clear()">X</button>
-	<div class="suggestions" [ngClass]="{ 'displayed': suggestionsDisplayed && suggestions.length > 0 }">
-		<div
-			*ngFor="let suggestion of suggestions; let i = index"
-			[ngClass]="{ 'suggestion': true, 'selected': i === selectedSuggestionIndex }"
-			(mousedown)="$event.preventDefault(); $event.stopPropagation(); onSuggestionClick(i)"
-		>
-			{{ suggestion }}
-		</div>
-	</div>
+  <div class="suggestions" [ngClass]="{ 'displayed': suggestionsDisplayed && suggestions.length > 0 }">
+    <div
+      *ngFor="let suggestion of suggestions; let i = index"
+      [ngClass]="{ 'suggestion': true, 'selected': i === selectedSuggestionIndex }"
+      (mousedown)="$event.preventDefault(); $event.stopPropagation(); onSuggestionClick(i)"
+    >
+      {{ suggestion }}
+    </div>
+  </div>
 </div>
