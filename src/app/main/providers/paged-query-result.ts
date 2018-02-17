@@ -1,4 +1,4 @@
 export interface PagedQueryResult<TItem> {
-	items: TItem[];
-	totalCount: number;
+  items: TItem[];
+  totalCount: number;
 }

@@ -5,7 +5,7 @@ import { GenreProvider } from './genre-provider';
 
 @Injectable()
 export class GenreSuggestionProvider extends SuggestionProvider<Genre> {
-		constructor(provider: GenreProvider) {
-				super(provider, genre => genre.name);
-		}
+    constructor(provider: GenreProvider) {
+        super(provider, genre => genre.name);
+    }
 }

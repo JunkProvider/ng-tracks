@@ -7,26 +7,26 @@ import { appConfig } from '../app.config';
 
 @Injectable()
 export class TagTypeProvider {
-		private readonly httpClient: HttpClient;
-		private readonly cookie: CookieService;
+    private readonly httpClient: HttpClient;
+    private readonly cookie: CookieService;
 
-		private allTagTypes: TagType[] = null;
+    private allTagTypes: TagType[] = null;
 
-		constructor(httpClient: HttpClient, cookie: CookieService) {
-				this.httpClient = httpClient;
-				this.cookie = cookie;
-		}
+    constructor(httpClient: HttpClient, cookie: CookieService) {
+        this.httpClient = httpClient;
+        this.cookie = cookie;
+    }
 
-		getAll(): Promise<TagType[]> {
-				if (this.allTagTypes) {
-						return Promise.resolve(this.allTagTypes);
-				}
-				return this.httpClient.get<any>(appConfig.api + '/tag-type').pipe(
-						map<{ data: TagType[] }, TagType[]>(data => data.data)
-				).toPromise().then(tagTypes => { this.allTagTypes = tagTypes; return tagTypes; });
-		}
+    getAll(): Promise<TagType[]> {
+        if (this.allTagTypes) {
+            return Promise.resolve(this.allTagTypes);
+        }
+        return this.httpClient.get<any>(appConfig.api + '/tag-type').pipe(
+            map<{ data: TagType[] }, TagType[]>(data => data.data)
+        ).toPromise().then(tagTypes => { this.allTagTypes = tagTypes; return tagTypes; });
+    }
 
-		clearCache() {
-				this.allTagTypes = null;
-		}
+    clearCache() {
+        this.allTagTypes = null;
+    }
 }

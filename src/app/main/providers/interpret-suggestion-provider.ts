@@ -5,7 +5,7 @@ import { InterpretProvider } from './interpret-provider';
 
 @Injectable()
 export class InterpretSuggestionProvider extends SuggestionProvider<Interpret> {
-		constructor(provider: InterpretProvider) {
-				super(provider, interpret => interpret.name);
-		}
+    constructor(provider: InterpretProvider) {
+        super(provider, interpret => interpret.name);
+    }
 }

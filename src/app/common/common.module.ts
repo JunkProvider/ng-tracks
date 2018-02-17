@@ -6,21 +6,21 @@ import { LoadingMask } from './components/loading-mask/loading-mask';
 import { LoadingIndicator } from './components/loading-indicator/loading-indicator';
 
 @NgModule({
-	declarations: [
-		SquareBox,
-		TextInput,
-		LoadingMask,
-		LoadingIndicator,
-	],
-	imports: [
-		BrowserModule
-	],
-	exports: [
-		SquareBox,
-		TextInput,
-		LoadingMask,
-		LoadingIndicator,
-	],
-	providers: []
+  declarations: [
+    SquareBox,
+    TextInput,
+    LoadingMask,
+    LoadingIndicator,
+  ],
+  imports: [
+    BrowserModule
+  ],
+  exports: [
+    SquareBox,
+    TextInput,
+    LoadingMask,
+    LoadingIndicator,
+  ],
+  providers: []
 })
 export class CommonModule { }

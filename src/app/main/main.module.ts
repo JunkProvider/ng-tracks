@@ -32,44 +32,44 @@ import { LoadingIndicator } from '../common/components/loading-indicator/loading
 import { FocusDirective } from './directives/focus-directive';
 
 @NgModule({
-	declarations: [
-		Page,
-		NavigationBar,
-		FilterSection,
-		OperatorSelect,
-		TrackList,
-		TrackDetails,
-		YoutubePlayer,
-		YoutubePlayerContext,
+  declarations: [
+    Page,
+    NavigationBar,
+    FilterSection,
+    OperatorSelect,
+    TrackList,
+    TrackDetails,
+    YoutubePlayer,
+    YoutubePlayerContext,
     FocusDirective
-	],
-	imports: [
-		BrowserModule,
-		RouterModule,
-		HttpClientModule,
-		NgCommonModule,
-		CommonModule
-	],
-	exports: [
-		Page
-	],
-	providers: [
-		CookieService,
-		AppModel,
-		LinkParser,
-		LinkDeserializer,
-		TrackDeserializer,
-		TrackProvider,
-		InterpretProvider,
-		GenreProvider,
-		TagTypeProvider,
-		SaveTrackService,
-		RateTrackService,
-		DeleteTrackService,
-		InterpretSuggestionProvider,
-		GenreSuggestionProvider,
-		TagTypeSuggestionProvider,
-		YoutubeVideoTitleInterpreter,
-	]
+  ],
+  imports: [
+    BrowserModule,
+    RouterModule,
+    HttpClientModule,
+    NgCommonModule,
+    CommonModule
+  ],
+  exports: [
+    Page
+  ],
+  providers: [
+    CookieService,
+    AppModel,
+    LinkParser,
+    LinkDeserializer,
+    TrackDeserializer,
+    TrackProvider,
+    InterpretProvider,
+    GenreProvider,
+    TagTypeProvider,
+    SaveTrackService,
+    RateTrackService,
+    DeleteTrackService,
+    InterpretSuggestionProvider,
+    GenreSuggestionProvider,
+    TagTypeSuggestionProvider,
+    YoutubeVideoTitleInterpreter,
+  ]
 })
 export class MainModule { }

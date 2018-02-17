@@ -7,60 +7,60 @@ import {TagTypeSuggestionProvider} from '../../providers/tag-type-suggestion-pro
 import { InterpretSuggestionProvider } from '../../providers/interpret-suggestion-provider';
 
 @Component({
-	selector: 'app-filter-section',
-	templateUrl: './filter-section.html',
-	styleUrls: ['./filter-section.css']
+  selector: 'app-filter-section',
+  templateUrl: './filter-section.html',
+  styleUrls: ['./filter-section.css']
 })
 export class FilterSection implements OnInit {
-	filterDefinitions = filterDefinitions;
-	filterDefinitionsAsArray = filterDefinitionsAsArray;
+  filterDefinitions = filterDefinitions;
+  filterDefinitionsAsArray = filterDefinitionsAsArray;
 
-	filters: Filter[] = [];
-	selectedFilter: Filter = null;
+  filters: Filter[] = [];
+  selectedFilter: Filter = null;
 
-	constructor(
-		readonly interpretSuggestionProvider: InterpretSuggestionProvider,
-		readonly genreSuggestionProvider: GenreSuggestionProvider,
-		readonly tagTypeSuggestionProvider: TagTypeSuggestionProvider,
-		private readonly model: AppModel
-	) { }
+  constructor(
+    readonly interpretSuggestionProvider: InterpretSuggestionProvider,
+    readonly genreSuggestionProvider: GenreSuggestionProvider,
+    readonly tagTypeSuggestionProvider: TagTypeSuggestionProvider,
+    private readonly model: AppModel
+  ) { }
 
-	ngOnInit() {
-		this.model.filtersChangedEvent.add(this, this.update);
-		this.model.selectedFilterChangedEvent.add(this, this.update);
-		this.update();
-	}
+  ngOnInit() {
+    this.model.filtersChangedEvent.add(this, this.update);
+    this.model.selectedFilterChangedEvent.add(this, this.update);
+    this.update();
+  }
 
-	onTypeChanged(type: string) {
-		this.selectedFilter.type = type;
-	}
+  onTypeChanged(type: string) {
+    this.selectedFilter.type = type;
+  }
 
-	onOperatorChanged(operator: string) {
-		this.selectedFilter.operator = operator;
-	}
+  onOperatorChanged(operator: string) {
+    this.selectedFilter.operator = operator;
+  }
 
-	onValueChanged(value: any) {
-		this.selectedFilter.value = value;
-	}
+  onValueChanged(value: any) {
+    this.selectedFilter.value = value;
+  }
 
-	select(filter: Filter) {
-		this.model.selectFilter(filter);
-	}
+  select(filter: Filter) {
+    this.model.selectFilter(filter);
+  }
 
-	add() {
-		this.model.createAndAddNewFilter();
-	}
+  add() {
+    this.model.createAndAddNewFilter();
+  }
 
-	remove(filter: Filter) {
-		this.model.removeFilter(filter);
-	}
+  remove(filter: Filter) {
+    this.model.removeFilter(filter);
+  }
 
-	apply() {
-		this.model.loadTracks();
-	}
+  apply() {
+    this.model.loadTracks();
+  }
 
-	private update() {
-		this.filters = this.model.filters;
-		this.selectedFilter = this.model.selectedFilter;
-	}
+  private update() {
+    this.filters = this.model.filters;
+    this.selectedFilter = this.model.selectedFilter;
+  }
 }

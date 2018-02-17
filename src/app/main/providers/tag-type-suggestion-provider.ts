@@ -5,7 +5,7 @@ import { TagType } from '../model/tag-type';
 
 @Injectable()
 export class TagTypeSuggestionProvider extends SuggestionProvider<TagType> {
-		constructor(provider: TagTypeProvider) {
-				super(provider, tagType => tagType.name);
-		}
+    constructor(provider: TagTypeProvider) {
+        super(provider, tagType => tagType.name);
+    }
 }

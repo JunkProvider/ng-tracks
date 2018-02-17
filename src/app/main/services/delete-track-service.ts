@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DeleteTrackService {
-		constructor(private readonly httpClient: HttpClient) {}
+    constructor(private readonly httpClient: HttpClient) {}
 
-		deleteTrack(id: number): Promise<void> {
-				return this.httpClient.post<void>('http://localhost:8080/track/delete', { id: id }).toPromise();
-		}
+    deleteTrack(id: number): Promise<void> {
+        return this.httpClient.post<void>('http://localhost:8080/track/delete', { id: id }).toPromise();
+    }
 }
